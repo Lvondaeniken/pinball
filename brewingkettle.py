@@ -8,34 +8,35 @@ import time
 #raw_input("  Press <Enter> to exit and disable grbl.")
 #ser.close()
 
+
+# Achtung zuerst "$X" schicken um Alarm Zustand zu verlassen.
+
 class BrewingKettle:
     def __init__(self):
-        self.ser = serial.Serial(port='', baudrate=115200)        
-        self.ser.write("\r\n\r\n")
-        time.sleep(2) # Wait for grbl to initializeR
-        ser.flushInput() # Flush startup text in serial input
+        self.ser = serial.Serial(port='/dev/tty.usbmodem14201', baudrate=115200)        
+        self.ser.write("\r\n\r\n".encode())
+        time.sleep(2) # Wait for grbl to initializer
+        self.ser.flushInput() # Flush startup text in serial input
+        self.ser.write("$X\r\n".encode())
 
     def moveUp(self):
         print("moving brewing kettle up...")
         # move up until limitswitch is triggered
-        #self.ser("")
+        self.ser.write("G21G91G1X-3.7F200\r\n".encode())
+        self.ser.write("G90 G21\r\n".encode())
 
     def moveDown(self):
         print("moving brewing kettle down...")
-        # move down until limitswitch is triggered
+        self.ser.write("G21G91G1X3.7F200\r\n".encode())
+        self.ser.write("G90 G21\r\n".encode())
 
     def getCurrentPosition(self):
         print("get current position of brewing kettle")
 
-ser = serial.Serial(port='/dev/ttyACM0',
-                    baudrate= 115200)
-
-
 if __name__ == '__main__':
     b = BrewingKettle()
-    if b.getCurrentPosition() == 1:
-        b.moveUp()
-    else:
-        b.moveDown()
+    b.moveUp()
+    time.sleep(2)
+    b.moveDown()
 
 
