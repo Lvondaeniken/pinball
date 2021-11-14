@@ -1,0 +1,75 @@
+<MyMenu>:
+    canvas.before:
+        Rectangle:
+            source:'assasin.png'
+            size: root.width, root.height
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        valign: 'centering'
+        
+        BoxLayout:
+            Label: 
+                text:'Fortschritt'
+                color:(0, 0, 0, 1.0)
+            Image:
+                id: image1
+                source:'white.jpg'
+            Image:
+                id: image2
+                source:'white.jpg'
+            Image:
+                id: image3
+                source:'white.jpg'
+            Image:
+                id: image4
+                source:'white.jpg'
+            Image:
+                id: image5
+                source:'white.jpg'
+            Image:
+                id: image6
+                source:'white.jpg'
+            Image:
+                id: image7
+                source:'white.jpg'
+            Image:
+                id: image8
+                source:'white.jpg'
+            Image:
+                id: image9
+                source:'white.jpg'
+        Button:
+            id: btn1
+            on_press: root.test()
+            text: "start game"
+            text_size: self.size
+            font_size: '25sp'
+            size: 200,200
+            markup: True
+            halign: 'center'
+            valign: 'center'
+            background_color: (0.06, .36, .4, .675)
+
+        Button:
+            text: "settings"
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+            font_size: '25sp'
+            markup: True
+            size: 200,200
+            background_color: (0.06, .36, .4, .675)
+
+        Button:
+            text: "bier"
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+            font_size: '25sp'
+            markup: True
+            size: 200,200
+            background_color: (0.06, .36, .4, .675)
+
+        
