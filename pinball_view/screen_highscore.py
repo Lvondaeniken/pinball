@@ -18,3 +18,6 @@ class HighscoreScreen(Screen):
             if len(self.highscoreData.get()) > i:
                 label.text = f'{self.highscoreData.get()[i].name} : {self.highscoreData.get()[i].score}'
             i += 1
+
+    def do_something(self):
+        print("im doing something")

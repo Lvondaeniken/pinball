@@ -3,31 +3,35 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.audio import Sound, SoundLoader
 from kivy.clock import Clock
+from pinball_listener import pinball_listener
 from screen_highscore import HighscoreScreen
 from screen_start import StartScreen
 from screen_settings import SettingsScreen
 from screen_play import PlayScreen
 
 import multiprocessing as mp
+import time
+from statemachine import StateMachine, State
 
 Builder.load_file('kv_files/settings.kv')
 Builder.load_file('kv_files/highscore.kv')
 Builder.load_file('kv_files/start.kv')
 
 class PinballView(App):
-    def __init__(self, queue):
+    def __init__(self):
         super(PinballView, self).__init__()
-        self.queue = queue
-        #Clock.schedule_interval(self.queue_listener, 0.5)
+        self.queue = mp.Queue() 
 
     def build(self):
         # Create the screen manager
-        print("slksjdflskdfj")
+        p = mp.Process(target=pinball_listener, args=(self.queue,))
+        p.daemon = True # make sure subprocess gets killed at the end
+        p.start()
         self.sm = ScreenManager()
-        self.sm.add_widget(HighscoreScreen(name='highscore'))
-        self.sm.add_widget(SettingsScreen(name='settings'))
-        self.sm.add_widget(StartScreen(name='start'))
-        self.sm.add_widget(PlayScreen(name='play'))
+        self.screens = [HighscoreScreen(name='highscore'), SettingsScreen(name='settings'), StartScreen(name='start'), PlayScreen(name='play')]
+        for screen in self.screens:
+            self.sm.add_widget(screen)
+        Clock.schedule_interval(self.queue_listener, 0.5)
         return self.sm
 
     def play(self):
@@ -36,9 +40,17 @@ class PinballView(App):
         SoundLoader.load('media/pouring.wav').play()
 
     def queue_listener(self, dt):
-        pass        
+        if not self.queue.empty():
+            input = self.queue.get(False)
+            if input == 'show highscore':
+                self.sm.switch_to(self.screens[0])    
+            elif input == 'show settings':
+                self.sm.switch_to(self.screens[1])
+            elif input == 'show start':
+                self.sm.switch_to(self.screens[2])
+            elif input == 'show play':
+                self.sm.switch_to(self.screens[3])  
 
 if __name__ == '__main__':
-    q = mp.Queue()
-    p = PinballView(q)
+    p = PinballView()
     p.run()
