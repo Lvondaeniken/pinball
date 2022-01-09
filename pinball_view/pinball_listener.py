@@ -1,13 +1,16 @@
 import multiprocessing as mp
 import time
 def pinball_listener(queue):
-    pass
     while True:
-        time.sleep(1)
-        queue.put("show highscore")
-        time.sleep(2)
-        queue.put("show start")
-        
+        queue.put('highscore')
+        time.sleep(3)
+        queue.put('settings')
+        time.sleep(3)
+        queue.put('start')
+        time.sleep(3)
+        queue.put('play')
+        time.sleep(3)
+
 if __name__ == '__main__':
     queue = mp.Queue()
     pinball_listener(queue)

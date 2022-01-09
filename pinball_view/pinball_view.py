@@ -16,6 +16,7 @@ from statemachine import StateMachine, State
 Builder.load_file('kv_files/settings.kv')
 Builder.load_file('kv_files/highscore.kv')
 Builder.load_file('kv_files/start.kv')
+Builder.load_file('kv_files/play.kv')
 
 class PinballView(App):
     def __init__(self):
@@ -42,13 +43,13 @@ class PinballView(App):
     def queue_listener(self, dt):
         if not self.queue.empty():
             input = self.queue.get(False)
-            if input == 'show highscore':
+            if input == 'highscore':
                 self.sm.switch_to(self.screens[0])    
-            elif input == 'show settings':
+            elif input == 'settings':
                 self.sm.switch_to(self.screens[1])
-            elif input == 'show start':
+            elif input == 'start':
                 self.sm.switch_to(self.screens[2])
-            elif input == 'show play':
+            elif input == 'play':
                 self.sm.switch_to(self.screens[3])  
 
 if __name__ == '__main__':
