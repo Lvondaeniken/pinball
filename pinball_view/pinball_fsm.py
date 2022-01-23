@@ -1,4 +1,5 @@
 from statemachine import StateMachine, State
+import serial
 
 class PinballStatemachine(StateMachine):
     step1 = State('Sammle Malz')
@@ -14,9 +15,14 @@ class PinballStatemachine(StateMachine):
     step11 = State('Animation fermentieren')
     step12 = State('final mode')
 
+    def __init__(self, ser: serial.Serial):
+        self.ser = ser
+
+    def send_command(command: str):
+        pass
+
     def on_enter_step1(self):
-        ballshooter.trigger()
-        bumper.start_collecting_malt()
+        pass
 
     def on_enter_step2(self):
         pass
