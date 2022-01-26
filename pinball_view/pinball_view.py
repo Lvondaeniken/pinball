@@ -19,20 +19,17 @@ Builder.load_file('kv_files/start.kv')
 Builder.load_file('kv_files/play.kv')
 
 class PinballView(App):
-    def __init__(self):
+    def __init__(self, queue: mp.Queue):
         super(PinballView, self).__init__()
-        self.queue = mp.Queue() 
+        self.queue = queue 
 
     def build(self):
         # Create the screen manager
-        p = mp.Process(target=pinball_listener, args=(self.queue,))
-        p.daemon = True # make sure subprocess gets killed at the end
-        p.start()
         self.sm = ScreenManager()
         self.screens = [HighscoreScreen(name='highscore'), SettingsScreen(name='settings'), StartScreen(name='start'), PlayScreen(name='play')]
         for screen in self.screens:
             self.sm.add_widget(screen)
-        Clock.schedule_interval(self.queue_listener, 0.5)
+        Clock.schedule_interval(self.queue_listener, 0.02)
         return self.sm
 
     def play(self):
@@ -43,14 +40,32 @@ class PinballView(App):
     def queue_listener(self, dt):
         if not self.queue.empty():
             input = self.queue.get(False)
-            if input == 'highscore':
-                self.sm.switch_to(self.screens[0])    
-            elif input == 'settings':
-                self.sm.switch_to(self.screens[1])
-            elif input == 'start':
-                self.sm.switch_to(self.screens[2])
-            elif input == 'play':
-                self.sm.switch_to(self.screens[3])  
+            if input == 'go_left':
+                self.go_right()    
+            elif input == 'go_right':
+                self.go_right()
+
+    def go_left(self):
+        current = self.sm.current
+        if current == 'highscore':
+            self.sm.switch_to(self.screens[2])
+        elif current == 'settings':
+            self.sm.switch_to(self.screens[0])            
+        elif current == 'start':
+            self.sm.switch_to(self.screens[1])            
+
+    def go_right(self):
+        current = self.sm.current
+        if current == 'highscore':
+            self.sm.switch_to(self.screens[1])
+        elif current == 'settings':
+            self.sm.switch_to(self.screens[2])            
+        elif current == 'start':
+            self.sm.switch_to(self.screens[0])
+
+    def iterate_menu(self):
+        pass
+
 
 if __name__ == '__main__':
     p = PinballView()

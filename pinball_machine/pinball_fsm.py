@@ -1,6 +1,9 @@
+from queue import Queue
+from pinball_machine.pinball_machine import PinballMachine
 from statemachine import StateMachine, State
 
 class PinballStatemachine(StateMachine):
+    startup = State('Menu', initial=True)
     step1 = State('Sammle Malz')
     step2 = State('Animation Mahlen')
     step3 = State('Mische das Malz')
@@ -14,9 +17,25 @@ class PinballStatemachine(StateMachine):
     step11 = State('Animation fermentieren')
     step12 = State('final mode')
 
+    start = startup.to(step1)
+    s1 = step1.to(step2)
+    s2 = step2.to(step3)
+    s3 = step3.to(step4)
+    s4 = step4.to(step5)
+    s5 = step5.to(step6)
+    s6 = step6.to(step7)
+    s7 = step7.to(step8)
+    s8 = step8.to(step9)
+    s9 = step9.to(step10)
+    s10 = step10.to(step11)
+    s11 = step11.to(step12)
+
+    def __init__(self, queue: Queue):
+        super().__init__()
+        self.pinballmachine = PinballMachine(queue)
+
     def on_enter_step1(self):
-        ballshooter.trigger()
-        bumper.start_collecting_malt()
+        pass
 
     def on_enter_step2(self):
         pass

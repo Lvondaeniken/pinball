@@ -1,10 +1,5 @@
 class Bumper:
-    # current level represents the amount of collected ingredients
-    current_level = 0
-    # id is a unique identifier
-    id = 'b0'
-    
-    def __init__(self, identifier, leds):
+    def __init__(self, identifier: str, leds: list):
         self.id = identifier  
         self.leds = leds
         
