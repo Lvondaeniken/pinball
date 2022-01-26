@@ -1,6 +1,7 @@
 from queue import Queue
 from pinball_machine.pinball_machine import PinballMachine
 from statemachine import StateMachine, State
+import serial
 
 class PinballStatemachine(StateMachine):
     startup = State('Menu', initial=True)
