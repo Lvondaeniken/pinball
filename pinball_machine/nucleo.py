@@ -14,26 +14,28 @@ class Nucleo(Process):
             return self.fromNucleo.get()
             
     def run(self):
-        ser = Serial(port = 'ttyUsb', baudrate=115200)
+        ser = Serial(port = '/dev/ttyAMA0', baudrate=9600)
         line = ""
         while True:
             if not self.toNucleo.empty():
                 msg = self.toNucleo.get()
                 ser.write(msg)
 
-            length = ser.in_waiting()
+            length = ser.in_waiting
             if length > 0:
-                char = ser.read().decode()
-                line += char
-                if char == '\n':
-                    self.fromNucleo.put(ser.readline())
+                char = ser.read()
+                line += char.decode()
+                if char == '\r'.encode():
+                    self.fromNucleo.put(line)
                     line = ""
 
 if __name__ == '__main__':
     n = Nucleo()
     n.startup()
-
+    s = "start".encode()
+    n.sendEvent(s)
     while True:
+        
         event = n.getEvent()
         if not event == None:
-            print(f'Received from nucleo -> {n.getEvent()}')
+            print(f'Received from nucleo -> {event}')
