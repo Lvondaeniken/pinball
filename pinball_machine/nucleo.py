@@ -34,4 +34,6 @@ if __name__ == '__main__':
     n.startup()
 
     while True:
-        print(f'Received from nucleo -> {n.getEvent()}')
+        event = n.getEvent()
+        if not event == None:
+            print(f'Received from nucleo -> {n.getEvent()}')
