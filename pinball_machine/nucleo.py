@@ -28,7 +28,7 @@ class Nucleo(Process):
                 char = ser.read()
                 line += char.decode()
                 if char == '\r'.encode():
-                    self.fromNucleo.put(line)
+                    self.fromNucleo.put(line.rstrip('\r').rstrip('\n'))
                     line = ""
 
 if __name__ == '__main__':
