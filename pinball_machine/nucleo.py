@@ -12,6 +12,8 @@ class Nucleo(Process):
     def getEvent(self):
         if not self.fromNucleo.empty():
             return self.fromNucleo.get()
+        else:
+            return None
             
     def run(self):
         ser = Serial(port = '/dev/ttyAMA0', baudrate=9600)

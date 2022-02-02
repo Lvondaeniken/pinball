@@ -4,14 +4,12 @@ import serial
 from bumper import Bumper
 from target import Target
 from steppers import Stepperdriver
-
+from nucleo import Nucleo
+import time
 class PinballMachine:
-    def __init__(self, queue):
-        self.view_queue = queue
-        self.nucleo = mp.Queue()
-        self.p = mp.Process(target=nucleo, args=(self.nucleo,))
-        self.p.daemon = True
-        self.p.start()
+    def __init__(self):
+        self.nucleo = Nucleo()
+        self.nucleo.startup()
         self.bumpers = []
         self._initBumper()
         self.steppers = Stepperdriver()
@@ -25,19 +23,11 @@ class PinballMachine:
         self.target = Target('target1', 3, [36, 40])
 
     def check_events(self):
-        if not self.nucleo.empty():
-            try:
-                return self.nucleo.get_nowait()
-            except:
-                return False
-                
-def nucleo(queue: mp.Queue):
-    ser = serial.Serial(port='/dev/tty.usbmodem14201', baudrate=115200)    
-    while True:
-        s = ser.readline()
-        queue.put(s)
-
+        print(self.nucleo.getEvent())
 
 if __name__ == '__main__':
-    q = mp.Queue()
-    p = PinballMachine(q)
+    
+    p = PinballMachine()
+    while True:
+        time.sleep(1)
+        p.check_events()
