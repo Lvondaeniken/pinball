@@ -21,7 +21,7 @@ class Nucleo(Process):
         while True:
             if not self.toNucleo.empty():
                 msg = self.toNucleo.get()
-                ser.write(msg)
+                ser.write(msg.encode())
 
             length = ser.in_waiting
             if length > 0:
