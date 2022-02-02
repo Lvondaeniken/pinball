@@ -5,6 +5,7 @@ class Bumper:
         
     def increment_level(self):
         self.current_level += 1
+        print(f'increment level of {self.identifier}')
 
     def reset_level(self):
         self.current_level = 0
