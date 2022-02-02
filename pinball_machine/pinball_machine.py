@@ -23,7 +23,10 @@ class PinballMachine:
         self.target = Target('target1', 3, [36, 40])
 
     def check_events(self):
-        print(self.nucleo.getEvent())
+        event = self.nucleo.getEvent()
+        if not event is None:
+            print(f'received event -> {event}')
+            self.nucleo.sendEvent('ack')
 
 if __name__ == '__main__':
     
