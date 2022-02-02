@@ -12,7 +12,7 @@ class PinballMachine:
         self.nucleo.startup()
         self.bumpers = []
         self._initBumper()
-        self.steppers = Stepperdriver()
+        #self.steppers = Stepperdriver()
 
     def _initBumper(self):
         self.bumpers.append(Bumper('bumper1', [10, 22]))
