@@ -39,6 +39,8 @@ class PinballMachine:
     def resolve_event(self, event):
         if event in self.events:
             self.events[event]()
+        else:
+            print("sorry not recognized event")
 
 
 
