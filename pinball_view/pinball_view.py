@@ -11,7 +11,6 @@ from screen_play import PlayScreen
 
 import multiprocessing as mp
 import time
-from statemachine import StateMachine, State
 
 Builder.load_file('kv_files/settings.kv')
 Builder.load_file('kv_files/highscore.kv')
