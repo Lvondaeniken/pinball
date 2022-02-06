@@ -1,18 +1,14 @@
 class Target:
-    def __init__(self, id: int, size: int, leds: list):
+    def __init__(self, id: int, leds: list):
         self.id = id
-        self.state = []
-        self.size = size
+        self.state = False
         self.leds = leds
-        self.reset()
 
     def reset(self):
-        for i in range(self.size):
-            self.state.append(False)
+        self.state = False
 
-    def update(self, i: int):
-        self.state[i] = not self.state[i]
-
+    def update(self):
+        self.state = not self.state
 
 if __name__=='__main__':
     t = Target(1, 3)
