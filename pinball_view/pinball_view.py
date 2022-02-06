@@ -11,10 +11,10 @@ from pinball_view.screen_play import PlayScreen
 import multiprocessing as mp
 import time
 
-Builder.load_file('kv_files/settings.kv')
-Builder.load_file('kv_files/highscore.kv')
-Builder.load_file('kv_files/start.kv')
-Builder.load_file('kv_files/play.kv')
+Builder.load_file('pinball_view/kv_files/settings.kv')
+Builder.load_file('pinball_view/kv_files/highscore.kv')
+Builder.load_file('pinball_view/kv_files/start.kv')
+Builder.load_file('pinball_view/kv_files/play.kv')
 
 class PinballView(App):
     def __init__(self, queue: mp.Queue):
