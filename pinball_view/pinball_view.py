@@ -3,10 +3,10 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.audio import Sound, SoundLoader
 from kivy.clock import Clock
-from screen_highscore import HighscoreScreen
-from screen_start import StartScreen
-from screen_settings import SettingsScreen
-from screen_play import PlayScreen
+from pinball_view.screen_highscore import HighscoreScreen
+from pinball_view.screen_start import StartScreen
+from pinball_view.screen_settings import SettingsScreen
+from pinball_view.screen_play import PlayScreen
 
 import multiprocessing as mp
 import time
