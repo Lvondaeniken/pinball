@@ -1,8 +1,6 @@
-from pinball_machine.nucleo import Nucleo
-
 
 class Kicker:
-    def __init__(self, nucleo: Nucleo):
+    def __init__(self, nucleo):
         self.nucleo = nucleo
 
     def enable(self):
