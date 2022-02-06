@@ -1,9 +1,14 @@
+from pinball_machine.nucleo import Nucleo
+
+
 class Kicker:
-    def __init__(self):
-        pass
+    def __init__(self, nucleo: Nucleo):
+        self.nucleo = nucleo
 
     def enable(self):
-        pass
+        print('enabel kicker')
+        self.nucleo.sendEvent('kOn')       
 
     def disable(self):
-        pass
+        print('disable kicker')
+        self.nucleo.sendEvent('kOff')
