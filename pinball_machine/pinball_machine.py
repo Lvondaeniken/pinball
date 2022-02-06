@@ -59,8 +59,8 @@ class PinballMachine:
 
 
 if __name__ == '__main__':
-    
-    p = PinballMachine()
+    q = mp.Queue()
+    p = PinballMachine(q)
     while True:
         time.sleep(1)
         p.check_events()
