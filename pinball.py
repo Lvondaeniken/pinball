@@ -14,10 +14,8 @@ class PinballApp:
     def run(self):
         while True:
             sleep(0.01)
-            event = self.fsm.pinballmachine.check_events()
-            if not event == False:
-                self.fsm.on_enter_step9()
-    
+            self.machine.check_events()
+
 def setup_view(queue):
     #disable for now because raspi no display
     #p = PinballView(queue)
