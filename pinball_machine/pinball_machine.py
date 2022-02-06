@@ -1,6 +1,6 @@
 import multiprocessing as mp
 import queue
-from pinball_machine.kicker import Kicker
+from kicker import Kicker
 import serial
 from bumper import Bumper
 from target import Target
