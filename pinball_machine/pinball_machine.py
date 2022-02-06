@@ -1,11 +1,11 @@
 import multiprocessing as mp
 import queue
-from kicker import Kicker
+from pinball_machine.kicker import Kicker
 import serial
-from bumper import Bumper
-from target import Target
-from steppers import Stepperdriver
-from nucleo import Nucleo
+from pinball_machine.bumper import Bumper
+from pinball_machine.target import Target
+from pinball_machine.steppers import Stepperdriver
+from pinball_machine.nucleo import Nucleo
 import time
 class PinballMachine:
     def __init__(self, view):
