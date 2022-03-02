@@ -1,9 +1,10 @@
 from serial import Serial
 from multiprocessing import Process, Queue
 class Nucleo(Process):
-    def startup(self):
+    def startup(self, debug=False):
         self.toNucleo = Queue()
         self.fromNucleo = Queue()
+        self.debug = debug
         self.start()
 
     def sendEvent(self, event):
@@ -16,21 +17,34 @@ class Nucleo(Process):
             return None
             
     def run(self):
-        ser = Serial(port = '/dev/ttyAMA0', baudrate=9600)
+        if self.debug == False:
+            ser = Serial(port = '/dev/ttyAMA0', baudrate=9600)
+        else: 
+            ser = Serial(port='/dev/ttys001') 
         line = ""
         while True:
-            if not self.toNucleo.empty():
-                msg = self.toNucleo.get()
-                ser.write(msg.encode())
+            if self.debug == False:
+                if not self.toNucleo.empty():
+                    msg = self.toNucleo.get()
+                    ser.write(msg.encode())
 
-            length = ser.in_waiting
-            if length > 0:
-                char = ser.read()
-                line += char.decode()
-                if char == '\r'.encode():
-                    self.fromNucleo.put(line.rstrip('\r').rstrip('\n'))
-                    line = ""
-
+                length = ser.in_waiting
+                if length > 0:
+                    char = ser.read()
+                    line += char.decode()
+                    if char == '\r'.encode():
+                        self.fromNucleo.put(line.rstrip('\r').rstrip('\n'))
+                        line = ""
+            else:
+                if self.toNucleo.empty():
+                    msg = self.toNucleo.get()
+                    print(msg)
+                try:
+                    s = input()
+                    self.fromNucleo.put(s)
+                except:
+                    pass
+                    
 if __name__ == '__main__':
     n = Nucleo()
     n.startup()
