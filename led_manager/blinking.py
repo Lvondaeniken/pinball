@@ -26,10 +26,10 @@ class BlinkingLight:
                     for i in range(self.led_count):
                         leds.append(self.background_color)
             # increment counter
-            for led in self.led_states:
+            for led in leds:
                 print(led.red)
             self.frame_counter+=1
-            return self.led_states
+            return leds
         else:
             return None
     
