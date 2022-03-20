@@ -65,7 +65,7 @@ class LedManager(Process):
                 if event.animation == LedAnimations.SWITCH:
                     self.bumper3.add_animation(LedSwitch(event.color, 12))
                 elif event.animation == LedAnimations.BLINK:
-                    self.bumper3.add_animation(BlinkingLight(self.timebase_ms, 10, 100, 12, event.color, event.background))
+                    self.bumper3.add_animation(BlinkingLight(self.timebase_ms, 10, 1, 12, event.color, event.background))
 
 if __name__=='__main__':
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
