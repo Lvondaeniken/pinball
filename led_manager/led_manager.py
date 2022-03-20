@@ -46,9 +46,9 @@ class LedManager(Process):
         next_frame.extend(self.bumper1.get_next_frame())
         next_frame.extend(self.bumper2.get_next_frame())
         next_frame.extend(self.bumper3.get_next_frame())
-        for i in next_frame: 
-            print(i, end=', ')
-            c = Color(i.red, i.green, i.blue)
+        for i in range(len(next_frame)): 
+            print(next_frame[i], end=', ')
+            c = Color(next_frame[i].red, next_frame[i].green, next_frame[i].blue)
             self.strip.setPixelColor(i, c)
             self.strip.show()
 
