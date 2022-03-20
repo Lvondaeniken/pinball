@@ -6,4 +6,4 @@ class LedColor:
         self.brightness = brightness
 
     def __str__(self):
-        return f"{self.red}, {self.green}, {self.blue}, {self.brightness}"
+        return f'{self.red}'
