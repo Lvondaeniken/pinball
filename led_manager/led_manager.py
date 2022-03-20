@@ -1,6 +1,7 @@
 from multiprocessing import Process, Queue
 from time import sleep
 from led_group import LedGroup
+from led_manager.blinking import BlinkingLight
 from rpi_ws281x import PixelStrip, Color
 from led_color import LedColor
 from led_switch import LedSwitch
@@ -37,7 +38,7 @@ class LedManager(Process):
         self.strip.begin()
     
         while True:
-            sleep(self.timebase_ms/10)
+            sleep(self.timebase_ms/1000)
             self.check_new_events()
             self.update_strip()
                 
@@ -47,7 +48,6 @@ class LedManager(Process):
         next_frame.extend(self.bumper2.get_next_frame())
         next_frame.extend(self.bumper3.get_next_frame())
         for i in range(len(next_frame)): 
-            print(next_frame[i], end=', ')
             c = Color(next_frame[i].red, next_frame[i].green, next_frame[i].blue)
             self.strip.setPixelColor(i, c)
             self.strip.show()
@@ -64,11 +64,13 @@ class LedManager(Process):
             elif event.target == LedElements.BUMPER3:
                 if event.animation == LedAnimations.SWITCH:
                     self.bumper3.add_animation(LedSwitch(event.color, 12))
+                elif event.animation == LedAnimations.BLINK:
+                    self.bumper3.add_animation(BlinkingLight(self.timebase_ms, 10, 500, 12, event.color, event.background))
 
 if __name__=='__main__':
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
     manager = LedManager()
-    manager.startup(10)
+    manager.startup(50)
     
     while True:
         c = input()
@@ -84,3 +86,5 @@ if __name__=='__main__':
             manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(255,1,1), LedColor(0,0,0)))
         elif c=='6':
             manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(0,0,0), LedColor(0,0,0)))
+        elif c=='7':
+            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(255,0,255), LedColor(0,255,0)))

@@ -1,7 +1,7 @@
 from led_color import LedColor 
 
 class BlinkingLight:
-    def __init__(self, timebase_ms, duration_s, frequency_hz, led_count, color: LedColor):
+    def __init__(self, timebase_ms, duration_s, frequency_hz, led_count, color: LedColor, background: LedColor):
         # save params
         self.color = color
         self.frames_to_survive = duration_s*1000/timebase_ms
@@ -9,17 +9,12 @@ class BlinkingLight:
         print(self.half_period_frames)
         self.led_count = led_count
         self.frame_counter = 0
-        self.background_color = LedColor(5,0,0)
+        self.background_color = background
         self.led_states = []
         for i in range(self.led_count):
             self.led_states.append(self.background_color)
 
-    def setBackground(self, color):
-        self.background_color = color
-        for led in self.led_states:
-            led = color
-
-    def getNextFrame(self):
+    def get_next_frame(self):
         if self.frame_counter < self.frames_to_survive:
             print(self.frame_counter)
             # check if half period has past
@@ -40,11 +35,10 @@ class BlinkingLight:
         else:
             return None
     
-    
 if __name__ == '__main__':
-    b = BlinkingLight(100, 10, 1, 10, LedColor(50,100,100))
+    b = BlinkingLight(100, 10, 1, 10, LedColor(50,100,100), LedColor(100,0,0))
     for i in range (20):
-        ledstates = b.getNextFrame()
+        ledstates = b.get_next_frame()
         for ledcolor in ledstates:
             print(ledcolor.red)
         print("--------------------")
