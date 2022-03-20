@@ -10,11 +10,9 @@ class BlinkingLight:
         self.led_count = led_count
         self.frame_counter = 0
         self.background_color = background
-        self.led_states = []
-        for i in range(self.led_count):
-            self.led_states.append(self.background_color)
-
+        
     def get_next_frame(self):
+        leds = []
         if self.frame_counter < self.frames_to_survive:
             # check if half period has past
             if self.frame_counter % self.half_period_frames == 0:
@@ -23,10 +21,10 @@ class BlinkingLight:
                 #check if it is an even or odd half period
                 if (self.frame_counter/self.half_period_frames)%2 == 0:
                     for i in range(len(self.led_states)):
-                        self.led_states[i] = self.color
+                        leds.append(self.color)
                 else:
                     for i in range(len(self.led_states)):
-                        self.led_states[i] = self.background_color
+                        leds.append(self.background_color)
             # increment counter
             for led in self.led_states:
                 print(led.red)
