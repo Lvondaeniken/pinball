@@ -16,9 +16,9 @@ class BlinkingLight:
 
     def get_next_frame(self):
         if self.frame_counter < self.frames_to_survive:
-            print(self.frame_counter)
             # check if half period has past
             if self.frame_counter % self.half_period_frames == 0:
+                print('now')
                 print((self.frame_counter/self.half_period_frames)%2)
                 #check if it is an even or odd half period
                 if (self.frame_counter/self.half_period_frames)%2 == 0:
