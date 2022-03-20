@@ -10,7 +10,7 @@ class WalkingLight:
         self.frames_to_survive = self.duration_s*1000/timebase_ms
         self.frames_per_led = self.frames_to_survive/self.led_count
         self.on_index = 0
-        self.background_color = LedColor(0,0,0,0)
+        self.background_color = LedColor(0,0,0)
         self.led_states = []
         for i in range(self.led_count):
             self.led_states.append(self.background_color)
@@ -32,7 +32,7 @@ class WalkingLight:
     
     
 if __name__ == '__main__':
-    w = WalkingLight(20, 1, 10, LedColor(255,255,255,100))
+    w = WalkingLight(20, 1, 10, LedColor(255,255,255))
     for i in range (49):
         ledstates = w.getNextFrame()
         for ledcolor in ledstates:

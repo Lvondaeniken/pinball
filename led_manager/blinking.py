@@ -9,7 +9,7 @@ class BlinkingLight:
         print(self.half_period_frames)
         self.led_count = led_count
         self.frame_counter = 0
-        self.background_color = LedColor(5,0,0,0)
+        self.background_color = LedColor(5,0,0)
         self.led_states = []
         for i in range(self.led_count):
             self.led_states.append(self.background_color)
