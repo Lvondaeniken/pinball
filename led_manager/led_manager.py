@@ -1,41 +1,28 @@
 from multiprocessing import Process, Queue
-from enum import Enum
 from time import sleep
+from led_group import LedGroup
+from blinking import BlinkingLight
+from rpi_ws281x import PixelStrip, Color
+from led_color import LedColor
+from led_switch import LedSwitch
+from led_event import LedEvent, LedAnimations, LedElements
 
-from led_manager.led_color import LedColor
-from led_manager.led_on_off import LedSwitch
+# LED strip configuration:
+LED_COUNT = 36        # Number of LED pixels.
+LED_PIN = 18          # GPIO pin connected to the pixels (18 uses PWM!).
+#LED_PIN = 10        # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
+LED_DMA = 10          # DMA channel to use for generating signal (try 10)
+LED_BRIGHTNESS = 255  # Set to 0 for darkest and 255 for brightest
+LED_INVERT = False    # True to invert the signal (when using NPN transistor level shift)
+LED_CHANNEL = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-class LedAnimations(Enum):
-    ON = 1
-    OFF = 2
-    BLINK = 3
-    WALK = 4
-
-class LedElements(Enum):
-    BUMPER1 = 1
-    BUMPER2 = 2
-    BUMPER3 = 3
-    BALLSHOOTER = 4
-
-class LedEvent:
-    def __init__(self, animation: LedAnimations, target: LedElements, color: LedColor, background: LedColor, duration_s=0):
-        self.animation = animation
-        self.target = target
-        self.color = color
-        self.background = color
-        self.duration_s = duration_s
 
 class LedManager(Process):
     def startup(self, timebase_ms):
         self.timebase_ms = timebase_ms
         self.toManager = Queue()
         self.fromManager = Queue()
-        self.led_index = {
-            LedElements.BUMPER1: [0, 9],
-            LedElements.BUMPER2: [10, 19],
-            LedElements.BUMPER3: [20, 29],
-            LedElements.BALLSHOOTER: [30, 39]
-        }
         self.start()
 
     def send_event(self, event: LedEvent):
@@ -43,44 +30,61 @@ class LedManager(Process):
 
 
     def run(self):
-        self.bumper1_events = []
-        self.bumper2_events = []
-        self.bumper3_events = []
-        self.ballshooter_events = []
-        self.next_led_states = []
-        for i in range(40):
-            self.next_led_states.append(LedColor(0,0,0))
-
+        self.bumper1 = LedGroup(12)
+        self.bumper2 = LedGroup(12) 
+        self.bumper3 = LedGroup(12) 
+        self.strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+        # Intialize the library (must be called once before other functions).
+        self.strip.begin()
+    
         while True:
             sleep(self.timebase_ms/1000)
-            self.check_queue()
+            self.check_new_events()
+            self.update_strip()
                 
-    def update_bumper1(self):
-        if not len(self.bumper1_events) == 0:
-            ret = self.bumper1_events[0].get_next_frame()
-            if ret == None:
-                self.bumper1_events.pop(0)
-            else:
-                start_index, end_index = self.led_index[LedElements.BUMPER1]
-                for i in range(len(ret)):
-                    self.next_led_states[start_index+i]=ret[i] 
+    def update_strip(self):
+        next_frame = []
+        next_frame.extend(self.bumper1.get_next_frame())
+        next_frame.extend(self.bumper2.get_next_frame())
+        next_frame.extend(self.bumper3.get_next_frame())
+        for i in range(len(next_frame)): 
+            c = Color(next_frame[i].red, next_frame[i].green, next_frame[i].blue)
+            self.strip.setPixelColor(i, c)
+            self.strip.show()
 
-
-    def check_queue(self):
+    def check_new_events(self):
         while not self.toManager.empty():
             event = self.toManager.get()
             if event.target == LedElements.BUMPER1:
-                if event.animation == LedAnimations.ON:
-                    self.bumper1_events.append(LedSwitch(event.color, 10))
+                if event.animation == LedAnimations.SWITCH:
+                    self.bumper1.add_animation(LedSwitch(event.color, 12))
             elif event.target == LedElements.BUMPER2:
-                self.bumper2_events.append(event)
+                if event.animation == LedAnimations.SWITCH:
+                    self.bumper2.add_animation(LedSwitch(event.color, 12))
             elif event.target == LedElements.BUMPER3:
-                self.bumper3_events.append(event)
-            elif event.target == LedElements.BALLSHOOTER:
-                self.ballshooter_events.append(event)
-
+                if event.animation == LedAnimations.SWITCH:
+                    self.bumper3.add_animation(LedSwitch(event.color, 12))
+                elif event.animation == LedAnimations.BLINK:
+                    self.bumper3.add_animation(BlinkingLight(self.timebase_ms, 10, 1, 12, event.color, event.background))
 
 if __name__=='__main__':
-    l = LedManager(20)
-    l.startup()
-    l.send_event(LedEvent(LedAnimations.ON, LedElements.BUMPER1, LedColor(100,0,0), LedColor(0,0,0)))
+    l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
+    manager = LedManager()
+    manager.startup(50)
+    
+    while True:
+        c = input()
+        if c == '1':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(255,1,1), LedColor(0,0,0)))
+        elif c=='2':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(0,0,0), LedColor(0,0,0)))
+        elif c=='3':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER2, LedColor(255,1,1), LedColor(0,0,0)))
+        elif c=='4':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER2, LedColor(0,0,0), LedColor(0,0,0)))
+        elif c=='5':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(255,1,1), LedColor(0,0,0)))
+        elif c=='6':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(0,0,0), LedColor(0,0,0)))
+        elif c=='7':
+            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(0,255,0), LedColor(255,0,0)))
