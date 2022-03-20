@@ -17,6 +17,6 @@ class LedEvent:
         self.animation = animation
         self.target = target
         self.color = color
-        self.background = color
+        self.background = background
         self.duration_s = duration_s
 
