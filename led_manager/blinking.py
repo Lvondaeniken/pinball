@@ -19,7 +19,6 @@ class BlinkingLight:
             print(self.frame_counter)
             # check if half period has past
             if self.frame_counter % self.half_period_frames == 0:
-                print("lets do it")
                 #check if it is an even or odd half period
                 if (self.frame_counter/self.half_period_frames)%2 == 0:
                     for i in range(len(self.led_states)):

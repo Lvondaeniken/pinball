@@ -1,7 +1,7 @@
 from multiprocessing import Process, Queue
 from time import sleep
 from led_group import LedGroup
-from led_manager.blinking import BlinkingLight
+from blinking import BlinkingLight
 from rpi_ws281x import PixelStrip, Color
 from led_color import LedColor
 from led_switch import LedSwitch
@@ -87,4 +87,4 @@ if __name__=='__main__':
         elif c=='6':
             manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(0,0,0), LedColor(0,0,0)))
         elif c=='7':
-            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(255,0,255), LedColor(0,255,0)))
+            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(255,0,0), LedColor(0,0,0)))
