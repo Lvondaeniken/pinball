@@ -87,4 +87,4 @@ if __name__=='__main__':
         elif c=='6':
             manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(0,0,0), LedColor(0,0,0)))
         elif c=='7':
-            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(255,0,0), LedColor(0,0,0)))
+            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(0,255,0), LedColor(255,0,0)))
