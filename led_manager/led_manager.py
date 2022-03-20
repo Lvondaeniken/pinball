@@ -25,7 +25,6 @@ class LedManager(Process):
 
         while True:
             sleep(self.timebase_ms/10)
-            print('hello')
             self.check_new_events()
             self.update_strip()
                 
@@ -54,7 +53,18 @@ if __name__=='__main__':
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
     manager = LedManager()
     manager.startup(10)
-    sleep(1)
-    manager.send_event(l)
+    
     while True:
-        pass
+        c = input()
+        if c == '1':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0)))
+        elif c=='2':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(0,0,0), LedColor(0,0,0)))
+        elif c=='3':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER2, LedColor(1,1,1), LedColor(0,0,0)))
+        elif c=='4':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER2, LedColor(0,0,0), LedColor(0,0,0)))
+        elif c=='5':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(1,1,1), LedColor(0,0,0)))
+        elif c=='6':
+            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(0,0,0), LedColor(0,0,0)))
