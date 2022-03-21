@@ -30,6 +30,11 @@ class LedManager(Process):
 
 
     def run(self):
+        self.led_groups = {
+                LedElements.BUMPER1: LedGroup(12),
+                LedElements.BUMPER2: LedGroup(12),
+                LedElements.BUMPER3: LedGroup(12)
+                }
         self.bumper1 = LedGroup(12)
         self.bumper2 = LedGroup(12) 
         self.bumper3 = LedGroup(12) 
@@ -44,9 +49,8 @@ class LedManager(Process):
                 
     def update_strip(self):
         next_frame = []
-        next_frame.extend(self.bumper1.get_next_frame())
-        next_frame.extend(self.bumper2.get_next_frame())
-        next_frame.extend(self.bumper3.get_next_frame())
+        for group in self.led_groups.values():
+            next_frame.extend(group.get_next_frame())
         for i in range(len(next_frame)): 
             c = Color(next_frame[i].red, next_frame[i].green, next_frame[i].blue)
             self.strip.setPixelColor(i, c)
@@ -55,17 +59,14 @@ class LedManager(Process):
     def check_new_events(self):
         while not self.toManager.empty():
             event = self.toManager.get()
-            if event.target == LedElements.BUMPER1:
-                if event.animation == LedAnimations.SWITCH:
-                    self.bumper1.add_animation(LedSwitch(event.color, 12))
-            elif event.target == LedElements.BUMPER2:
-                if event.animation == LedAnimations.SWITCH:
-                    self.bumper2.add_animation(LedSwitch(event.color, 12))
-            elif event.target == LedElements.BUMPER3:
-                if event.animation == LedAnimations.SWITCH:
-                    self.bumper3.add_animation(LedSwitch(event.color, 12))
-                elif event.animation == LedAnimations.BLINK:
-                    self.bumper3.add_animation(BlinkingLight(self.timebase_ms, 10, 1, 12, event.color, event.background))
+            if event.animation == LedAnimations.SWITCH:
+                self.led_groups[event.target].add_animation(LedSwitch(event.color, 12))
+            if event.animation == LedAnimations.SWITCH:
+                self.led_groups[event.target].add_animation(LedSwitch(event.color, 12))
+            if event.animation == LedAnimations.SWITCH:
+                self.led_groups[event.target].add_animation(LedSwitch(event.color, 12))
+            elif event.animation == LedAnimations.BLINK:
+                self.led_groups[event.target].add_animation(BlinkingLight(self.timebase_ms, 10, 1, 12, event.color, event.background))
 
 if __name__=='__main__':
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
