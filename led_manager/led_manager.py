@@ -1,11 +1,12 @@
 from multiprocessing import Process, Queue
 from time import sleep
-#from rpi_ws281x import PixelStrip, Color
-from led_manager.dummy_strip import DummyStrip
+from rpi_ws281x import PixelStrip, Color
+#from led_manager.dummy_strip import DummyStrip
 from led_manager.led_event import LedEvent
 from led_manager.led_group import LedGroup
-
+#
 # LED strip configuration:
+import sys,os
 
 
 class LedManager(Process):
@@ -35,8 +36,8 @@ class LedManager(Process):
         self.bumper1 = LedGroup(12)
         self.bumper2 = LedGroup(12) 
         self.bumper3 = LedGroup(12) 
-#        self.strip = PixelStrip(self.led_count, self.led_pin, self.led_freq_hz, self.led_dma, self.led_invert, self.led_brightness, self.led_channel)
-        self.strip = DummyStrip()
+        self.strip = PixelStrip(self.led_count, self.led_pin, self.led_freq_hz, self.led_dma, self.led_invert, self.led_brightness, self.led_channel)
+        #self.strip = DummyStrip()
         # Intialize the library (must be called once before other functions).
         self.strip.begin()
     
@@ -67,6 +68,7 @@ class LedManager(Process):
                 self.led_groups[event.target].add_animation(BlinkingLight(self.timebase_ms, 10, 1, 12, event.color, event.background))
 
 if __name__=='__main__':
+    sys.path.append(os.getcwd())
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
     manager = LedManager()
     manager.startup(50)
