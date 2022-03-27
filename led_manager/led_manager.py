@@ -1,25 +1,25 @@
 from multiprocessing import Process, Queue
+from led_manager.led_event import LedAnimations, LedElements
 from time import sleep
-from led_group import LedGroup
-from blinking import BlinkingLight
 from rpi_ws281x import PixelStrip, Color
-from led_color import LedColor
-from led_switch import LedSwitch
-from led_event import LedEvent, LedAnimations, LedElements
-
+#from led_manager.dummy_strip import DummyStrip
+from led_manager.led_event import LedEvent
+from led_manager.led_group import LedGroup
+from led_manager.led_switch import LedSwitch
+from led_manager.blinking import BlinkingLight
 # LED strip configuration:
-LED_COUNT = 36        # Number of LED pixels.
-LED_PIN = 18          # GPIO pin connected to the pixels (18 uses PWM!).
-#LED_PIN = 10        # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
-LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
-LED_DMA = 10          # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 255  # Set to 0 for darkest and 255 for brightest
-LED_INVERT = False    # True to invert the signal (when using NPN transistor level shift)
-LED_CHANNEL = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+import sys,os
 
 
 class LedManager(Process):
     def startup(self, timebase_ms):
+        self.led_count = 36# Number of LED pixels.
+        self.led_pin = 18 # GPIO pin connected to the pixels (18 uses PWM!).
+        self.led_freq_hz = 800000 # LED signal frequency in hertz (usually 800khz)
+        self.led_dma = 10# DMA channel to use for generating signal (try 10)
+        self.led_brightness = 255 # Set to 0 for darkest and 255 for brightest
+        self.led_invert = False    # True to invert the signal (when using NPN transistor level shift)
+        self.led_channel = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
         self.timebase_ms = timebase_ms
         self.toManager = Queue()
         self.fromManager = Queue()
@@ -38,7 +38,8 @@ class LedManager(Process):
         self.bumper1 = LedGroup(12)
         self.bumper2 = LedGroup(12) 
         self.bumper3 = LedGroup(12) 
-        self.strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+        self.strip = PixelStrip(self.led_count, self.led_pin, self.led_freq_hz, self.led_dma, self.led_invert, self.led_brightness, self.led_channel)
+        #self.strip = DummyStrip()
         # Intialize the library (must be called once before other functions).
         self.strip.begin()
     
@@ -69,6 +70,7 @@ class LedManager(Process):
                 self.led_groups[event.target].add_animation(BlinkingLight(self.timebase_ms, 10, 1, 12, event.color, event.background))
 
 if __name__=='__main__':
+    sys.path.append(os.getcwd())
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
     manager = LedManager()
     manager.startup(50)

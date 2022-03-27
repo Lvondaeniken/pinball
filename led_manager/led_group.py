@@ -1,5 +1,5 @@
-from led_event import LedEvent
-from led_color import LedColor
+from led_manager.led_event import LedEvent
+from led_manager.led_color import LedColor
 class LedGroup:
     def __init__(self, led_count):
         self.event_queue = []
@@ -11,7 +11,10 @@ class LedGroup:
 
     def add_animation(self, event: LedEvent):
         self.event_queue.append(event)
-        
+
+    def force_animation(self, event: LedEvent):
+        self.event_queue.insert(0, event)
+
     def get_next_frame(self):
         if not len(self.event_queue) == 0:
             ret = self.event_queue[0].get_next_frame()

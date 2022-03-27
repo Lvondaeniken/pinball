@@ -1,5 +1,4 @@
-from led_color import LedColor 
-
+from led_manager.led_color import LedColor
 class WalkingLight:
     def __init__(self, timebase_ms, duration_s, led_count, color: LedColor):
         self.color = color

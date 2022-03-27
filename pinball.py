@@ -24,5 +24,7 @@ def setup_view(queue):
         pass
 
 if __name__ == '__main__': 
+    import sys,os
+    sys.path.append(os.getcwd())
     p = PinballApp()
     p.run()
