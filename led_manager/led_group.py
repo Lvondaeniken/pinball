@@ -1,4 +1,5 @@
 from led_manager.led_event import LedEvent
+from led_manager.led_color import LedColor
 class LedGroup:
     def __init__(self, led_count):
         self.event_queue = []
