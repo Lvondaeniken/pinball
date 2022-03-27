@@ -1,5 +1,3 @@
-from led_color import LedColor 
-
 class BlinkingLight:
     def __init__(self, timebase_ms, duration_s, frequency_hz, led_count, color: LedColor, background: LedColor):
         # save params

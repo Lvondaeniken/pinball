@@ -1,6 +1,5 @@
-from led_color import LedColor
 from enum import Enum
-
+from led_manager.led_color import LedColor
 class LedAnimations(Enum):
     SWITCH = 1
     BLINK = 2

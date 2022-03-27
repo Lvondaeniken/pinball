@@ -1,11 +1,12 @@
 import multiprocessing as mp
 import queue
-from kicker import Kicker
+from pinball_machine.basic_elements.kicker import Kicker
 import serial
-from bumper import Bumper
-from target import Target
-from steppers import Stepperdriver
-from nucleo import Nucleo
+from pinball_machine.basic_elements.bumper import Bumper
+from pinball_machine.basic_elements.target import Target
+from pinball_machine.basic_elements.steppers import Stepperdriver
+from pinball_machine.nucleo import Nucleo
+from led_manager.led_manager import LedManager
 import time
 
 class PinballMachine:
@@ -25,6 +26,9 @@ class PinballMachine:
             't2' : self.t2.update,
             't3' : self.t3.update,
         }
+        self.led_manager = LedManager()
+        TIMEBASE_MS = 10
+        self.led_manager.startup(TIMEBASE_MS)
         #self.steppers = Stepperdriver()
 
     def _initBumper(self):
