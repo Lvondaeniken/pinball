@@ -20,7 +20,8 @@ class Nucleo(Process):
         if self.debug == False:
             ser = Serial(port = '/dev/ttyAMA0', baudrate=9600)
         else: 
-            ser = Serial(port='/dev/ttys001') 
+            #ser = Serial(port='/dev/ttys001') 
+            pass
         line = ""
         while True:
             if self.debug == False:

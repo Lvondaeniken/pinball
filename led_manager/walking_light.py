@@ -1,4 +1,4 @@
-from led_color import LedColor 
+from led_manager.led_color import LedColor 
 import math
 import random
 
@@ -13,7 +13,7 @@ class LedPattern:
         self.frames_to_survive = self.duration_s*1000/timebase_ms
         self.frames_per_led = self.frames_to_survive/self.led_count
         self.on_index = 0
-        self.background_color = LedColor(0,0,0,0)
+        self.background_color = LedColor(0,0,0)
         self.led_states = []
         for i in range(self.led_count):
             self.led_states.append(self.background_color)
@@ -46,7 +46,7 @@ class LedPattern:
     
     
 if __name__ == '__main__':
-    rail_one = LedPattern(timebase_ms=20, duration_s=1, led_count=10, color=LedColor(255,255,255,100))
+    rail_one = WalkingLight(timebase_ms=20, duration=1, led_count=10, color=LedColor(255,255,255))
     for i in range (49):
         ledstates = rail_one.WalkingLights()
         for ledcolor in ledstates:
