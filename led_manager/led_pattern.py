@@ -1,6 +1,9 @@
 from led_color import LedColor 
+import math
+import random
 
-class WalkingLight:
+#class WalkingLight:
+class LedPattern:
     def __init__(self, timebase_ms, duration_s, led_count, color: LedColor):
         self.color = color
         self.timebase_ms = timebase_ms
@@ -20,7 +23,8 @@ class WalkingLight:
         for led in self.led_states:
             led = color
 
-    def getNextFrame(self):
+    #def getNextFrame(self):
+    def WalkingLights(self):
         self.frame_counter+=1
         if self.frame_counter==self.frames_per_led:
             self.on_index+=1
@@ -29,14 +33,34 @@ class WalkingLight:
         if self.on_index > 0:
             self.led_states[self.on_index-1] = self.background_color
         return self.led_states
+
+    def WaterLights(self):
+        self.frame_counter+=1
+        if self.frame_counter==self.frames_per_led:
+            self.on_index+=1
+            self.frame_counter=0
+        self.color.red = abs(20*int(math.cos((random.randint(0,24))*math.pi)/8))
+        self.color.green = abs(20*int(math.cos((random.randint(0,24))*math.pi)/8))
+        self.led_states[self.on_index] = self.color
+        return self.led_states
     
     
 if __name__ == '__main__':
-    w = WalkingLight(20, 1, 10, LedColor(255,255,255,100))
+    rail_one = LedPattern(timebase_ms=20, duration_s=1, led_count=10, color=LedColor(255,255,255,100))
     for i in range (49):
-        ledstates = w.getNextFrame()
+        ledstates = rail_one.WalkingLights()
         for ledcolor in ledstates:
             print(ledcolor)
         print("--------------------")
+
+    rail_two = LedPattern(timebase_ms=20, duration_s=1, led_count=10, color=LedColor(red=0,green=0,blue=255,brightness=100))
+    for i in range (49):
+        ledstates = rail_two.WaterLights()
+        for ledcolor in ledstates:
+            print(ledcolor)
+        print("--------------------")
+    print(abs(20*int(math.cos(random.randint(0,24)*math.pi/8))))
+    
+
 
 
