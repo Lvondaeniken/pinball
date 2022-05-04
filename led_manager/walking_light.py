@@ -46,7 +46,7 @@ class LedPattern:
     
     
 if __name__ == '__main__':
-    rail_one = WalkingLight(timebase_ms=20, duration=1, led_count=10, color=LedColor(255,255,255))
+    rail_one = LedPattern(timebase_ms=20, duration=1, led_count=10, color=LedColor(255,255,255))
     for i in range (49):
         ledstates = rail_one.WalkingLights()
         for ledcolor in ledstates:
