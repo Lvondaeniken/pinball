@@ -1,4 +1,4 @@
-from pinball_machine.pinball_machine import PinballMachine
+from game_logic.game_logic import GameLogic
 from pinball_view.pinball_view import PinballView 
 from multiprocessing import Queue, Process
 from time import sleep
@@ -9,12 +9,10 @@ class PinballApp:
         self.view_queue = Queue()
         self.view_process = Process(target=setup_view, args=(self.view_queue,))
         # setup pinballmachine and statemachine
-        self.machine = PinballMachine(self.view_queue)
+        self.game = GameLogic(self.view_queue)
 
     def run(self):
-        while True:
-            sleep(0.01)
-            self.machine.check_events()
+        self.game.check()
 
 def setup_view(queue):
     #disable for now because raspi no display

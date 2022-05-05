@@ -7,37 +7,36 @@ from pinball_machine.basic_elements.target import Target
 from pinball_machine.basic_elements.steppers import Stepperdriver
 from pinball_machine.nucleo import Nucleo
 from led_manager.led_manager import LedManager
+from led_manager.led_event import LedElements
 import time
 
 class PinballMachine:
-    def __init__(self, view):
+    def __init__(self, view, debug: bool=False):
+        self.debug = debug
         self.view_queue = view
         # init nucleo asap because other members need it.
+        self.led_manager = LedManager()
         self.nucleo = Nucleo()
-        self.nucleo.startup(debug=True)
+        self.nucleo.startup(self.debug)
         self._initBumper()
         self._initTarget()
         self._initKicker()
         self.events = {
-            'b1' : self.b1.increment_level,
-            'b2' : self.b2.increment_level,
-            'b3' : self.b3.increment_level,
+            'b1' : self.b1.register_hit,
+            'b2' : self.b2.register_hit,
+            'b3' : self.b3.register_hit,
             't1' : self.t1.update,
             't2' : self.t2.update,
             't3' : self.t3.update,
         }
-        self.led_manager = LedManager()
         TIMEBASE_MS = 10
-        self.led_manager.startup(TIMEBASE_MS)
+        self.led_manager.startup(TIMEBASE_MS, self.debug)
         #self.steppers = Stepperdriver()
 
     def _initBumper(self):
-        self.b1 = Bumper('bumper1', [10, 22])
-        self.b2 = Bumper('bumper2', [23, 34])
-        self.b3 = Bumper('bumper3', [35, 46])
-        self.b1.reset_level()
-        self.b2.reset_level()
-        self.b3.reset_level()
+        self.b1 = Bumper(LedElements.BUMPER1, self.led_manager)
+        self.b2 = Bumper(LedElements.BUMPER2, self.led_manager)
+        self.b3 = Bumper(LedElements.BUMPER3, self.led_manager)
 
     def _initTarget(self):
         self.t1 = Target('target1', [36, 40])
@@ -60,6 +59,9 @@ class PinballMachine:
             self.events[event]()
         else:
             print("sorry not recognized event")
+
+    def get_bumper_states(self):
+        return [self.b1.get_hit_count(), self.b2.get_hit_count(), self.b3.get_hit_count()]
 
 
 

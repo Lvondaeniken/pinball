@@ -1,16 +1,19 @@
 from led_manager.led_manager import LedManager
-from led_manager.led_event import LedEvent
+from led_manager.led_event import LedElements 
 class Bumper:
-    def __init__(self, identifier: str, leds: list):
-        self.id = identifier  
-        self.leds = leds
-
-    def share_led_manager(led_manager: LedManager):
+    MAX_LEVEL = 6
+    def __init__(self, led_id: LedElements, led_manager: LedManager):
+        self.led_id = led_id 
         self.led_manager = led_manager
-        
-    def increment_level(self):
-        self.current_level += 1
-        print(f'increment level of {self.id}')
+        self.hit_counter = 0
 
-    def reset_level(self):
-        self.current_level = 0
+    def reset_hit_count(self):
+        self.hit_counter = 0
+
+    def register_hit(self):
+        if self.hit_counter < MAX_LEVEL:
+            self.hit_counter += 1
+
+    def get_hit_count(self):
+        return self.hit_counter
+

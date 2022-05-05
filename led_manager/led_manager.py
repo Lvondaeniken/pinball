@@ -1,8 +1,8 @@
 from multiprocessing import Process, Queue
 from led_manager.led_event import LedAnimations, LedElements
 from time import sleep
-from rpi_ws281x import PixelStrip, Color
-#from led_manager.dummy_strip import DummyStrip
+#from rpi_ws281x import PixelStrip, Color
+from led_manager.dummy_strip import DummyStrip, Color
 from led_manager.led_event import LedEvent
 from led_manager.led_group import LedGroup
 from led_manager.led_switch import LedSwitch
@@ -12,7 +12,8 @@ import sys,os
 
 
 class LedManager(Process):
-    def startup(self, timebase_ms):
+    def startup(self, timebase_ms, debug: bool=False):
+        self.debug = debug
         self.led_count = 36# Number of LED pixels.
         self.led_pin = 18 # GPIO pin connected to the pixels (18 uses PWM!).
         self.led_freq_hz = 800000 # LED signal frequency in hertz (usually 800khz)
@@ -33,13 +34,16 @@ class LedManager(Process):
         self.led_groups = {
                 LedElements.BUMPER1: LedGroup(12),
                 LedElements.BUMPER2: LedGroup(12),
-                LedElements.BUMPER3: LedGroup(12)
+                LedElements.BUMPER3: LedGroup(12),
+                LedElements.BALLSHOOTER: LedGroup(5),
+                LedElements.TARGET1: LedGroup(3),
+                LedElements.TARGET2: LedGroup(3),
+                LedElements.TARGET3: LedGroup(3)
                 }
-        self.bumper1 = LedGroup(12)
-        self.bumper2 = LedGroup(12) 
-        self.bumper3 = LedGroup(12) 
-        self.strip = PixelStrip(self.led_count, self.led_pin, self.led_freq_hz, self.led_dma, self.led_invert, self.led_brightness, self.led_channel)
-        #self.strip = DummyStrip()
+        if self.debug:
+            self.strip = DummyStrip()
+        else:
+            self.strip = PixelStrip(self.led_count, self.led_pin, self.led_freq_hz, self.led_dma, self.led_invert, self.led_brightness, self.led_channel)
         # Intialize the library (must be called once before other functions).
         self.strip.begin()
     
@@ -60,10 +64,6 @@ class LedManager(Process):
     def check_new_events(self):
         while not self.toManager.empty():
             event = self.toManager.get()
-            if event.animation == LedAnimations.SWITCH:
-                self.led_groups[event.target].add_animation(LedSwitch(event.color, 12))
-            if event.animation == LedAnimations.SWITCH:
-                self.led_groups[event.target].add_animation(LedSwitch(event.color, 12))
             if event.animation == LedAnimations.SWITCH:
                 self.led_groups[event.target].add_animation(LedSwitch(event.color, 12))
             elif event.animation == LedAnimations.BLINK:

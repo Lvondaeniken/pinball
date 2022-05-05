@@ -10,6 +10,9 @@ class LedElements(Enum):
     BUMPER2 = 2
     BUMPER3 = 3
     BALLSHOOTER = 4
+    TARGET1 = 5
+    TARGET2 = 6
+    TARGET3 = 7
 
 class LedEvent:
     def __init__(self, animation: LedAnimations, target: LedElements, color: LedColor, background: LedColor, duration_s=0):

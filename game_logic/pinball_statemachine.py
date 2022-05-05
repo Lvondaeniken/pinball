@@ -1,6 +1,6 @@
 from queue import Queue
-from pinball_machine.pinball_machine import PinballMachine
 from statemachine import StateMachine, State
+from pinball_machine.pinball_machine import PinballMachine
 import serial
 
 class PinballStatemachine(StateMachine):
@@ -31,9 +31,9 @@ class PinballStatemachine(StateMachine):
     s10 = step10.to(step11)
     s11 = step11.to(step12)
 
-    def __init__(self, queue: Queue):
+    def __init__(self, machine: PinballMachine):
         super().__init__()
-        self.pinballmachine = PinballMachine(queue)
+        self.machine = machine
 
     def on_enter_step1(self):
         pass
