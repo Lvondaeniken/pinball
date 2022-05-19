@@ -1,6 +1,6 @@
 from queue import Queue
 from statemachine import StateMachine, State
-from pinball_machine.pinball_machine import PinballMachine
+from pinball_machine_pkg.pinball_machine import PinballMachine
 import serial
 
 class PinballStatemachine(StateMachine):

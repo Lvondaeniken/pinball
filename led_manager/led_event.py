@@ -1,24 +1,24 @@
-from enum import Enum
 from led_manager.led_color import LedColor
-class LedAnimations(Enum):
-    SWITCH = 1
-    BLINK = 2
-    WALK = 3
+from led_manager.led_animations import LedAnimations
+from led_manager.led_elements import LedElements
 
-class LedElements(Enum):
-    BUMPER1 = 1
-    BUMPER2 = 2
-    BUMPER3 = 3
-    BALLSHOOTER = 4
-    TARGET1 = 5
-    TARGET2 = 6
-    TARGET3 = 7
+from dataclasses import dataclass
 
+@dataclass
 class LedEvent:
-    def __init__(self, animation: LedAnimations, target: LedElements, color: LedColor, background: LedColor, duration_s=0):
-        self.animation = animation
-        self.target = target
-        self.color = color
-        self.background = background
-        self.duration_s = duration_s
+    animation: LedAnimations
+    target: LedElements
+    color: LedColor
+    background: LedColor
+    duration: int
 
+    def get_target(self) -> LedElements:
+        return self.target
+
+    def get_color(self) -> LedColor:
+        return self.color
+
+
+if __name__=='__main__':
+    l = LedEvent(LedAnimations.BLINK, LedElements.BALLSHOOTER, LedColor(255, 255, 255), LedColor(0,0,0), 10)
+    

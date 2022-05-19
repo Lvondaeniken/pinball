@@ -1,4 +1,4 @@
-from game_logic.game_logic import GameLogic
+from game_logic.gamelogic import GameLogic
 from pinball_view.pinball_view import PinballView 
 from multiprocessing import Queue, Process
 from time import sleep
@@ -22,7 +22,5 @@ def setup_view(queue):
         pass
 
 if __name__ == '__main__': 
-    import sys,os
-    sys.path.append(os.getcwd())
     p = PinballApp()
     p.run()
