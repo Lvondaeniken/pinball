@@ -1,12 +1,12 @@
 from multiprocessing import Process, Queue
-from led_manager.led_event import LedAnimations, LedElements
+from led_manager_pkg.led_event import LedAnimations, LedElements
 from time import sleep
 #from rpi_ws281x import PixelStrip, Color
-from led_manager.dummy_strip import DummyStrip, Color
-from led_manager.led_event import LedEvent
-from led_manager.led_group import LedGroup
-from led_manager.led_switch import LedSwitch
-from led_manager.blinking import BlinkingLight
+from led_manager_pkg.dummy_strip import DummyStrip, Color
+from led_manager_pkg.led_event import LedEvent
+from led_manager_pkg.led_group import LedGroup
+from led_manager_pkg.led_switch import LedSwitch
+from led_manager_pkg.blinking import BlinkingLight
 # LED strip configuration:
 import sys,os
 

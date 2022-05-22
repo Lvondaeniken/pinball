@@ -6,8 +6,8 @@ from pinball_machine_pkg.basic_elements.bumper import Bumper
 from pinball_machine_pkg.basic_elements.target import Target
 from pinball_machine_pkg.basic_elements.steppers import Stepperdriver
 from pinball_machine_pkg.nucleo import Nucleo
-from led_manager.led_manager import LedManager
-from led_manager.led_event import LedElements
+from led_manager_pkg.led_manager import LedManager
+from led_manager_pkg.led_event import LedElements
 import time
 
 class PinballMachine:

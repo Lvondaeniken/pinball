@@ -1,4 +1,4 @@
-from led_manager.led_color import LedColor
+from led_manager_pkg.led_color import LedColor
 class LedSwitch:
     def __init__(self, color: LedColor, led_count: int):
         self.color = color
