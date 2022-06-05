@@ -1,17 +1,23 @@
-from pinball_machine_pkg.pinball_machine import PinballMachine
+from pinball_hardware.pinball_machine import PinballMachine
 from multiprocessing import Queue
 from game_logic.game_quests import MainState
+from game_logic.Quests.Questbase import Questbase
 from game_logic.Quests.quest1 import Quest1
-QUESTS = {MainState.STARTUP: Quest1()}
+QUESTS = {MainState.STARTUP: Quest1}
+        
 class Game:
-    def __init__(self, view_event_queue: Queue):
-        self.machine = PinballMachine(view_event_queue, True) 
+    def __init__(self, pinball_machine: PinballMachine, view_event_queue: Queue):
+        self.machine =  pinball_machine
         self.active_quest = QUESTS[MainState.STARTUP]
 
     def start(self):
-        self.active_quest.is_done()
-if __name__=='__main__':
-    #g = Game()
-    #g.start()
-    pass
+        while True:
+            self.machine.update()
+            self.check_active_quest_progress() 
 
+    def check_active_quest_progress(self):
+        if self.active_quest.is_done():
+            self.active_quest = get_next_quest()
+        
+def get_next_quest() -> Questbase:
+    return QUESTS[MainState.STARTUP]

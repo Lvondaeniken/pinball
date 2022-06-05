@@ -1,5 +1,5 @@
-from led_manager_pkg.led_manager import LedManager
-from led_manager_pkg.led_event import LedElements 
+from led_handling.led_manager import LedManager
+from led_handling.led_event import LedElements 
     
 MAX_LEVEL = 6
 class Bumper:

@@ -1,5 +1,5 @@
-from pinball.game_logic.Quests.Questbase import Questbase
-from pinball.pinball_machine_pkg.pinball_machine import PinballMachine
+from game_logic.Quests.Questbase import Questbase
+from pinball_hardware.pinball_machine import PinballMachine
 
 
 class Quest1(Questbase):

@@ -1,4 +1,4 @@
-from serial import Serial
+from serial.serialwin32 import Serial 
 from multiprocessing import Process, Queue
 class Nucleo(Process):
     def startup(self, debug=False):

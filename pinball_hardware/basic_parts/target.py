@@ -1,6 +1,6 @@
-from led_manager_pkg.led_manager import LedManager
-from led_manager_pkg.led_event import LedEvent, LedAnimations, LedElements
-from led_manager_pkg.led_color import LedColor
+from led_handling.led_manager import LedManager
+from led_handling.led_event import LedEvent, LedAnimations, LedElements
+from led_handling.led_color import LedColor
 
 class Target:
     def __init__(self, id: int, leds: LedManager):
@@ -11,14 +11,14 @@ class Target:
     def reset(self):
         self.state = False
 
-    def update(self):
+    def report_event(self):
         self.state = not self.state
         self.leds.send_event(LedEvent(LedAnimations.BLINK, LedElements.TARGET1, LedColor(100, 0, 0), LedColor(0,0,0), 2))
 
 if __name__=='__main__':
     t = Target(1, 3)
     print(t.state)
-    t.update(0)
+    t.report_event(0)
     print(t.state)
 
     

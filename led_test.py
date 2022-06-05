@@ -1,8 +1,8 @@
-from led_manager_pkg.led_event import LedEvent
-from led_manager_pkg.led_color import LedColor
-from led_manager_pkg.led_group import LedGroup
-from led_manager_pkg.led_event import LedAnimations, LedElements
-from led_manager_pkg.led_manager import LedManager
+from led_handling.led_event import LedEvent
+from led_handling.led_color import LedColor
+from led_handling.led_group import LedGroup
+from led_handling.led_event import LedAnimations, LedElements
+from led_handling.led_manager import LedManager
 #
 # LED strip configuration:
 import sys,os

@@ -1,4 +1,4 @@
-from led_manager_pkg.led_color import LedColor
+from led_handling.led_color import LedColor
 
 class BlinkingLight:
     def __init__(self, timebase_ms, duration_s, frequency_hz, led_count, color: LedColor, background: LedColor):

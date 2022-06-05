@@ -1,5 +1,5 @@
-from led_manager_pkg.led_event import LedEvent
-from led_manager_pkg.led_color import LedColor
+from led_handling.led_event import LedEvent
+from led_handling.led_color import LedColor
 class LedGroup:
     def __init__(self, led_count):
         self.event_queue = []
@@ -17,7 +17,7 @@ class LedGroup:
 
     def get_next_frame(self):
         if len(self.event_queue) == 0:
-            return
+            return []
         ret = self.event_queue[0].get_next_frame()
         if ret == None:
             self.event_queue.pop(0)

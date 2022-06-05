@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from pinball.pinball_machine_pkg.pinball_machine import PinballMachine
-
+from pinball_hardware.pinball_machine import PinballMachine
 
 class Questbase(ABC):
     @abstractmethod
