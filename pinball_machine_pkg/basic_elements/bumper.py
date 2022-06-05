@@ -1,7 +1,8 @@
 from led_manager_pkg.led_manager import LedManager
 from led_manager_pkg.led_event import LedElements 
+    
+MAX_LEVEL = 6
 class Bumper:
-    MAX_LEVEL = 6
     def __init__(self, led_id: LedElements, led_manager: LedManager):
         self.led_id = led_id 
         self.led_manager = led_manager

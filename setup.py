@@ -32,7 +32,7 @@ def main():
     env = EnvBuilder('pinball-venv')
     #env.create()
     #env.activate()
-    #env.install_requirements('requirements.txt')
+    env.install_requirements('requirements.txt')
     env.extend_search_path()
 
 if __name__=='__main__':
