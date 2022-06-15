@@ -1,7 +1,7 @@
 from pinball_hardware.pinball_machine import PinballMachine
 from multiprocessing import Queue
-from game_logic.game_quests import MainState
 from game_logic.Quests.Questbase import Questbase
+from game_quest import MainState
 from game_logic.Quests.quest1 import Quest1
 QUESTS = {MainState.STARTUP: Quest1}
         
