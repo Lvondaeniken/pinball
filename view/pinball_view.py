@@ -3,18 +3,18 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.audio import Sound, SoundLoader
 from kivy.clock import Clock
-from pinball_view.screen_highscore import HighscoreScreen
-from pinball_view.screen_start import StartScreen
-from pinball_view.screen_settings import SettingsScreen
-from pinball_view.screen_play import PlayScreen
+from view.screen_highscore import HighscoreScreen
+from view.screen_start import StartScreen
+from view.screen_settings import SettingsScreen
+from view.screen_play import PlayScreen
 
 import multiprocessing as mp
 import time
 
-Builder.load_file('pinball_view/kv_files/settings.kv')
-Builder.load_file('pinball_view/kv_files/highscore.kv')
-Builder.load_file('pinball_view/kv_files/start.kv')
-Builder.load_file('pinball_view/kv_files/play.kv')
+Builder.load_file('kv_files/settings.kv')
+Builder.load_file('kv_files/highscore.kv')
+Builder.load_file('kv_files/start.kv')
+Builder.load_file('kv_files/play.kv')
 
 class PinballView(App):
     def __init__(self, queue: mp.Queue):
@@ -66,5 +66,5 @@ class PinballView(App):
 
 
 if __name__ == '__main__':
-    p = PinballView()
+    p = PinballView(mp.Queue())
     p.run()

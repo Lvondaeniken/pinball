@@ -1,4 +1,4 @@
-from pinball_view.highscore_db import *
+from view.highscore_db import *
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
