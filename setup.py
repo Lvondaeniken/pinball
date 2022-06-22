@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 
 class EnvBuilder:
@@ -28,12 +28,13 @@ class EnvBuilder:
         with open(f'{self.name}/Lib/site-packages/pinball-env.pth', 'w') as f:
             f.write(path_for_searchpath)
 
-def main():
+def main(arg: str):
     env = EnvBuilder('pinball-venv')
-    #env.create()
-    #env.activate()
-    env.install_requirements('requirements.txt')
-    env.extend_search_path()
+    if arg == '-c':
+        env.create()
+    elif arg == '-d':
+        env.install_requirements('requirements.txt')
+        env.extend_search_path()
 
 if __name__=='__main__':
-    main()
+    main(sys.argv[1])
