@@ -18,7 +18,7 @@ class PinballMachine:
         self.debug = debug
         self.view_queue = view
         # init nucleo asap because other members need it.
-        self.nucleo.startup(self.debug)
+        self.nucleo.startup()
         self.led_manager.startup(TIMEBASE_MS, self.debug)
 
         self.parts = {
@@ -48,7 +48,9 @@ class PinballMachine:
 
 if __name__ == '__main__':
     q = mp.Queue()
-    p = PinballMachine(q, debug=True)
+    l = LedManager()
+    n = Nucleo()
+    p = PinballMachine(n, l, q, debug=True)
     while True:
         time.sleep(1)
         p.update()

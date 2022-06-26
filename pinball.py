@@ -1,7 +1,7 @@
 from game_logic.gamelogic import Game
 from pinball_hardware.nucleo import Nucleo
 from pinball_hardware.pinball_machine import PinballMachine
-from pinball_view.pinball_view import PinballView 
+from view.pinball_view import PinballView 
 from led_handling.led_manager import LedManager
 from multiprocessing import Queue, Process
 from time import sleep
@@ -14,7 +14,7 @@ class PinballApp:
         led_manager = LedManager()
         pinball_hw = PinballMachine(nucleo, led_manager, view_queue, True)
 
-        self.gui_proc = Process(target=setup_view, args=(view_queue,))
+        # self.gui_proc = Process(target=setup_view, args=(view_queue,))
         self.game = Game(pinball_hw, view_queue)
 
     def run(self):
