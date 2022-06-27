@@ -11,7 +11,7 @@ class Bumper:
     def reset_hit_count(self):
         self.hit_counter = 0
 
-    def register_hit(self):
+    def resolve_event(self):
         if self.hit_counter < MAX_LEVEL:
             self.hit_counter += 1
 

@@ -11,7 +11,7 @@ class Target:
     def reset(self):
         self.state = False
 
-    def report_event(self):
+    def resolve_event(self):
         self.state = not self.state
         self.leds.send_event(LedEvent(LedAnimations.BLINK, LedElements.TARGET1, LedColor(100, 0, 0), LedColor(0,0,0), 2))
 
