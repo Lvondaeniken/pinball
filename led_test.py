@@ -8,7 +8,6 @@ from led_handling.led_manager import LedManager
 import sys,os
 
 if __name__=='__main__':
-    sys.path.append(os.getcwd())
     l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(1,1,1), LedColor(0,0,0))
     manager = LedManager()
     manager.startup(50)

@@ -1,7 +1,7 @@
 from game_logic.gamelogic import Game
 from pinball_hardware.nucleo import Nucleo
 from pinball_hardware.pinball_machine import PinballMachine
-from view.pinball_view import PinballView 
+# from view.pinball_view import PinballView 
 from led_handling.led_manager import LedManager
 from multiprocessing import Queue, Process
 from time import sleep
@@ -21,12 +21,12 @@ class PinballApp:
         #self.gui_proc.start()
         self.game.start()
 
-def setup_view(queue):
-    #disable for now because raspi no display
-    p = PinballView(queue)
-    p.run()
-    while True: 
-        pass
+# def setup_view(queue):
+#     #disable for now because raspi no display
+#     p = PinballView(queue)
+#     p.run()
+#     while True: 
+#         pass
 
 if __name__ == '__main__': 
     p = PinballApp()

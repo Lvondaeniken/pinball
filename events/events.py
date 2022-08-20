@@ -20,6 +20,9 @@ class EventType(Enum):
 class PinballEvent:
     element: EventElement
     type: EventType 
+    
+    def __repr__(self) -> str:
+        return "Event source: {self.element}"
 
 if __name__=='__main__':
     event = PinballEvent(EventElement.BUMPER2, EventType.HIT)
