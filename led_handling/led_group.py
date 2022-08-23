@@ -3,8 +3,9 @@ from led_handling.blinking import BlinkingLight
 from led_handling.led_animations import LedAnimations
 from led_handling.led_event import LedEvent
 from led_handling.led_color import LedColor
-from led_handling.led_manager import TIMEBASE_MS
 from led_handling.led_switch import LedSwitch
+
+TIMEBASE_MS = 10
 class LedGroup:
     def __init__(self, led_count):
         self.event_queue : list[AnimationInterface] = []
