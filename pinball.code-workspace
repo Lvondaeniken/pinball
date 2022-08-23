@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"vim.easymotion": true,
+		"vim.incsearch": true,
+		"vim.useSystemClipboard": true,
+		"vim.useCtrlKeys": true,
+		"vim.hlsearch": true,
+		"vim.leader": "<space>",
+		"vim.handleKeys": {
+			"<C-a>": false,
+			"<C-f>": false
+		}
+	}
+}
