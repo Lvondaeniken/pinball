@@ -11,6 +11,8 @@ class LedGroup:
         self.event_queue : list[AnimationInterface] = []
         self.led_states : list[LedColor] = []
         self.led_count : int = led_count
+        for i in range(self.led_count):
+            self.led_states.append(LedColor(0,0,0))
         self.set_all_off()
              
     def get_led_count(self)->int:
@@ -42,4 +44,4 @@ class LedGroup:
 
     def set_all_off(self):
         for i in range(self.led_count):
-            self.led_states.append(LedColor(0,0,0))
+            self.led_states[i] =LedColor(0,0,0)
