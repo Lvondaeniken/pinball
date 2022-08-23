@@ -1,8 +1,8 @@
 from multiprocessing import Process, Queue
 from led_handling.led_event import LedAnimations, LedElements
 from time import sleep
-#from rpi_ws281x import PixelStrip, Color
-from led_handling.dummy_strip import DummyStrip, Color
+from rpi_ws281x import PixelStrip, Color
+# from led_handling.dummy_strip import DummyStrip, Color
 from led_handling.led_event import LedEvent
 from led_handling.led_group import LedGroup
 from led_handling.led_color import LedColor
@@ -12,9 +12,10 @@ from led_handling.blinking import BlinkingLight
 import sys
 import os
 
+TIMEBASE_MS = 10
 
 class LedManager(Process):
-    def startup(self, timebase_ms, debug: bool = False):
+    def startup(self, debug: bool = False):
         self.debug = debug
         self.led_count = 36  # Number of LED pixels.
         self.led_pin = 18  # GPIO pin connected to the pixels (18 uses PWM!).
@@ -25,7 +26,6 @@ class LedManager(Process):
         # True to invert the signal (when using NPN transistor level shift)
         self.led_invert = False
         self.led_channel = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
-        self.timebase_ms = timebase_ms
         self.toManager = Queue()
         self.fromManager = Queue()
         self.start()
@@ -52,14 +52,15 @@ class LedManager(Process):
         self.strip.begin()
 
         while True:
-            sleep(self.timebase_ms/1000)
+            sleep(TIMEBASE_MS/1000)
             self.check_new_events()
             self.update_strip()
 
     def update_strip(self):
-        next_frame = []
+        next_frame : list[LedColor] = []
         for group in self.led_groups.values():
             next_frame.extend(group.get_next_frame())
+
         for i in range(len(next_frame)):
             c = Color(next_frame[i].red,
                       next_frame[i].green, next_frame[i].blue)
@@ -68,42 +69,5 @@ class LedManager(Process):
 
     def check_new_events(self):
         while not self.toManager.empty():
-            event = self.toManager.get()
-            if event.animation == LedAnimations.SWITCH:
-                self.led_groups[event.target].add_animation(
-                    LedSwitch(event.color, 12))
-            elif event.animation == LedAnimations.BLINK:
-                self.led_groups[event.target].add_animation(BlinkingLight(
-                    self.timebase_ms, 10, 1, 12, event.color, event.background))
-
-
-if __name__ == '__main__':
-    sys.path.append(os.getcwd())
-    l = LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1,
-                 LedColor(1, 1, 1), LedColor(0, 0, 0))
-    manager = LedManager()
-    manager.startup(50)
-
-    while True:
-        c = input()
-        if c == '1':
-            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(
-                255, 1, 1), LedColor(0, 0, 0)))
-        elif c == '2':
-            manager.send_event(LedEvent(
-                LedAnimations.SWITCH, LedElements.BUMPER1, LedColor(0, 0, 0), LedColor(0, 0, 0)))
-        elif c == '3':
-            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER2, LedColor(
-                255, 1, 1), LedColor(0, 0, 0)))
-        elif c == '4':
-            manager.send_event(LedEvent(
-                LedAnimations.SWITCH, LedElements.BUMPER2, LedColor(0, 0, 0), LedColor(0, 0, 0)))
-        elif c == '5':
-            manager.send_event(LedEvent(LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(
-                255, 1, 1), LedColor(0, 0, 0)))
-        elif c == '6':
-            manager.send_event(LedEvent(
-                LedAnimations.SWITCH, LedElements.BUMPER3, LedColor(0, 0, 0), LedColor(0, 0, 0)))
-        elif c == '7':
-            manager.send_event(LedEvent(LedAnimations.BLINK, LedElements.BUMPER3, LedColor(
-                0, 255, 0), LedColor(255, 0, 0)))
+            event : LedEvent = self.toManager.get()
+            self.led_groups[event.target].add_event(event)

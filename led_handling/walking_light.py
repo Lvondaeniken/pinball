@@ -1,5 +1,6 @@
+from led_handling.animations import AnimationInterface
 from led_handling.led_color import LedColor
-class WalkingLight:
+class WalkingLight(AnimationInterface):
     def __init__(self, timebase_ms, duration_s, led_count, color: LedColor):
         self.color = color
         self.timebase_ms = timebase_ms
@@ -14,12 +15,12 @@ class WalkingLight:
         for i in range(self.led_count):
             self.led_states.append(self.background_color)
 
-    def setBackground(self, color):
+    def set_background(self, color):
         self.background_color = color
         for led in self.led_states:
             led = color
 
-    def getNextFrame(self):
+    def get_next_frame(self):
         self.frame_counter+=1
         if self.frame_counter==self.frames_per_led:
             self.on_index+=1

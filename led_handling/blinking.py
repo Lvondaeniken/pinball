@@ -1,19 +1,17 @@
+from led_handling.animations import AnimationInterface
 from led_handling.led_color import LedColor
 
-class BlinkingLight:
+class BlinkingLight(AnimationInterface):
     def __init__(self, timebase_ms, duration_s, frequency_hz, led_count, color: LedColor, background: LedColor):
         # save params
         self.color = color
         self.frames_to_survive = duration_s*1000/timebase_ms
         self.half_period_frames = 1000/(2*frequency_hz*timebase_ms)
-        print(f'half period {self.half_period_frames}')
         self.led_count = led_count
         self.frame_counter = 0
         self.background_color = background
-        print(self.color.red)
-        print(self.background_color.red)
 
-    def get_next_frame(self):
+    def get_next_frame(self) -> list[LedColor]:
         leds = []
         if self.frame_counter < self.frames_to_survive:
             # check if half period has past
@@ -32,10 +30,3 @@ class BlinkingLight:
             return leds
         else:
             return None
-    
-if __name__ == '__main__':
-    b = BlinkingLight(100, 10, 1, 10, LedColor(50,100,100), LedColor(100,0,0))
-    for i in range (20):
-        ledstates = b.get_next_frame()
-
-
