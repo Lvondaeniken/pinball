@@ -67,6 +67,7 @@ class LedManager(Process):
             self.strip.show()
         if len(next_frame) != 18:
             print(f"hmm length is {len(next_frame)} instead of 18")
+        next_frame =[]
 
     def check_new_events(self):
         while not self.toManager.empty():
