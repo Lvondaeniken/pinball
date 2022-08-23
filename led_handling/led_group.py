@@ -1,4 +1,3 @@
-from re import I
 from led_handling.animations import AnimationInterface
 from led_handling.blinking import BlinkingLight
 from led_handling.led_animations import LedAnimations
@@ -29,7 +28,9 @@ class LedGroup:
         self.event_queue.insert(0, LedSwitch(event.color, self.led_count))
 
     def get_next_frame(self) -> list[LedColor]:
-        if len(self.event_queue) > 0:
+        if len(self.event_queue) == 0:
+            self.set_all_off()
+        else:
             ret = self.event_queue[0].get_next_frame()
             if ret == None:
                 # delete animation if finished
@@ -37,10 +38,8 @@ class LedGroup:
                 self.set_all_off()
             else:
                 self.led_states = ret
-        else:
-            self.set_all_off()
         return self.led_states
 
-    def set_all_off(self) -> list[LedColor]:
+    def set_all_off(self):
         for i in range(self.led_count):
             self.led_states.append(LedColor(0,0,0))
