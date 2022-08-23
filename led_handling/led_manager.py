@@ -35,10 +35,9 @@ class LedManager(Process):
 
     def run(self):
         self.led_groups = {
-            LedElements.BUMPER1: LedGroup(12),
-            LedElements.BUMPER2: LedGroup(12),
-            LedElements.BUMPER3: LedGroup(12),
-            LedElements.BALLSHOOTER: LedGroup(5),
+            LedElements.BUMPER1: LedGroup(3),
+            LedElements.BUMPER2: LedGroup(3),
+            LedElements.BUMPER3: LedGroup(3),
             LedElements.TARGET1: LedGroup(3),
             LedElements.TARGET2: LedGroup(3),
             LedElements.TARGET3: LedGroup(3)
@@ -66,6 +65,8 @@ class LedManager(Process):
                       next_frame[i].green, next_frame[i].blue)
             self.strip.setPixelColor(i, c)
             self.strip.show()
+        if len(next_frame) != 18:
+            print("hmm")
 
     def check_new_events(self):
         while not self.toManager.empty():
