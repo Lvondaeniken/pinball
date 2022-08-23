@@ -1,4 +1,5 @@
-from serial.serialwin32 import Serial
+# from serial.serialwin32 import Serial
+from serial import Serial
 from multiprocessing import Process, Queue
 from events.events import PinballEvent 
 from events.event_factory import get_event_from_string 
@@ -26,7 +27,6 @@ class Nucleo(Process):
             self.ser.write(msg.encode())
 
     def receiveIncomingMsgFromNucleo(self) -> bool:
-
             if self.ser.in_waiting == 0:
                 return
             char = self.ser.read().decode()
@@ -41,7 +41,7 @@ class Nucleo(Process):
 
 
     def run(self):
-        self.ser = Serial(port='COM8', baudrate=9600)
+        self.ser = Serial(port='/dev/ttyUSB0', baudrate=9600)
         self.incoming_nucleo_msg_buffer = ""
         while True:
             self.transmitPendingMessageToNucleo()

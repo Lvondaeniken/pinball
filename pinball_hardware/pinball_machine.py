@@ -9,7 +9,6 @@ from led_handling.led_event import LedElements
 import time
 from events.events import EventElement, PinballEvent
 
-TIMEBASE_MS = 10
 
 class PinballMachine:
     def __init__(self, nucleo: Nucleo, led_manager: LedManager, view, debug: bool=False):
@@ -19,7 +18,7 @@ class PinballMachine:
         self.view_queue = view
         # init nucleo asap because other members need it.
         self.nucleo.startup()
-        #self.led_manager.startup(TIMEBASE_MS, self.debug)
+        self.led_manager.startup(self.debug)
         self.parts = {
             EventElement.BUMPER1: Bumper(LedElements.BUMPER1, self.led_manager),
             EventElement.BUMPER2: Bumper(LedElements.BUMPER2, self.led_manager), 
