@@ -12,7 +12,7 @@ class PinballApp:
         view_queue = Queue()
         nucleo = Nucleo()
         led_manager = LedManager()
-        pinball_hw = PinballMachine(nucleo, led_manager, view_queue, True)
+        pinball_hw = PinballMachine(nucleo, led_manager, view_queue, False)
 
         # self.gui_proc = Process(target=setup_view, args=(view_queue,))
         self.game = Game(pinball_hw, view_queue)
