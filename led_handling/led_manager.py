@@ -66,7 +66,7 @@ class LedManager(Process):
             self.strip.setPixelColor(i, c)
             self.strip.show()
         if len(next_frame) != 18:
-            print("hmm")
+            print(f"hmm length is {len(next_frame)} instead of 18")
 
     def check_new_events(self):
         while not self.toManager.empty():
