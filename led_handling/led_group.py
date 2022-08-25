@@ -34,14 +34,16 @@ class LedGroup:
             self.set_all_off()
         else:
             ret = self.event_queue[0].get_next_frame()
-            print(ret)
             if ret == None:
                 print("event finished")
                 # delete animation if finished
                 self.event_queue.pop(0)
                 self.set_all_off()
             else:
-                self.led_states = ret
+                if len(ret) == self.led_count:
+                    self.led_states = ret
+                else:
+                    self.set_all_off()
         return self.led_states
 
     def set_all_off(self):
