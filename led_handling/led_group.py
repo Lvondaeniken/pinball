@@ -5,7 +5,7 @@ from led_handling.led_event import LedEvent
 from led_handling.led_color import LedColor
 from led_handling.led_switch import LedSwitch
 
-TIMEBASE_MS = 10
+TIMEBASE_MS = 200
 class LedGroup:
     def __init__(self, led_count):
         self.event_queue : list[AnimationInterface] = []
@@ -34,7 +34,9 @@ class LedGroup:
             self.set_all_off()
         else:
             ret = self.event_queue[0].get_next_frame()
+            print(ret)
             if ret == None:
+                print("event finished")
                 # delete animation if finished
                 self.event_queue.pop(0)
                 self.set_all_off()

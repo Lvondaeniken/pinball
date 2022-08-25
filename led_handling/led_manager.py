@@ -12,7 +12,7 @@ from led_handling.blinking import BlinkingLight
 import sys
 import os
 
-TIMEBASE_MS = 10
+TIMEBASE_MS = 200
 
 class LedManager(Process):
     def startup(self, debug: bool = False):
@@ -40,7 +40,7 @@ class LedManager(Process):
             LedElements.BUMPER3: LedGroup(3),
             LedElements.TARGET1: LedGroup(3),
             LedElements.TARGET2: LedGroup(3),
-            LedElements.TARGET3: LedGroup(3)
+            LedElements.TARGET3: LedGroup(3),
         }
         if self.debug:
             self.strip = DummyStrip()
