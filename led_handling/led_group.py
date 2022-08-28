@@ -5,12 +5,12 @@ from led_handling.led_event import LedEvent
 from led_handling.led_color import LedColor
 from led_handling.led_switch import LedSwitch
 
-TIMEBASE_MS = 200
 class LedGroup:
-    def __init__(self, led_count):
+    def __init__(self, led_count, timebase_ms: int):
         self.event_queue : list[AnimationInterface] = []
         self.led_states : list[LedColor] = []
         self.led_count : int = led_count
+        self.timebase_ms = timebase_ms
         for i in range(self.led_count):
             self.led_states.append(LedColor(0,0,0))
         self.set_all_off()
@@ -20,7 +20,7 @@ class LedGroup:
 
     def add_event(self, event: LedEvent):
         if event.animation == LedAnimations.BLINK:
-            self.event_queue.append(BlinkingLight(TIMEBASE_MS, event.duration, 1, self.led_count, event.color, event.background))
+            self.event_queue.append(BlinkingLight(self.timebase_ms, event.duration, 1, self.led_count, event.color, event.background))
         elif event.animation == LedAnimations.SWITCH:
             self.event_queue.append(LedSwitch(event.color, self.led_count))
         else:

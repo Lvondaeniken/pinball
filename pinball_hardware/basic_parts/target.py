@@ -16,4 +16,4 @@ class Target:
 
     def resolve_event(self):
         self.hit_flag = True
-        self.led_manager.send_event(LedEvent(LedAnimations.BLINK, self.led_id, LedColor(100, 0, 0), LedColor(0,0,0), 2))
+        self.led_manager.send_event(LedEvent(LedAnimations.BLINK, self.led_id, LedColor(100, 0, 0), LedColor(0,100,0), 2))

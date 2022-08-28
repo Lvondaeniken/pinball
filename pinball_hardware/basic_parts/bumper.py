@@ -19,4 +19,4 @@ class Bumper:
     def resolve_event(self):
         if self.hit_count < MAX_LEVEL:
             self.hit_count += 1
-        self.led_manager.send_event(LedEvent(LedAnimations.BLINK, self.led_id, LedColor(100, 1, 0), LedColor(0,0,100), 2))
+        self.led_manager.send_event(LedEvent(LedAnimations.BLINK, self.led_id, LedColor(100, 1, 0), LedColor(0,0,100), 5))
