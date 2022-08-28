@@ -3,7 +3,7 @@ from pinball_hardware.nucleo import Nucleo
 from pinball_hardware.pinball_machine import PinballMachine
 # from view.pinball_view import PinballView 
 from led_handling.led_manager import LedManager
-from multiprocessing import Queue, Process
+from multiprocessing import Queue
 from time import sleep
 
 class PinballApp:

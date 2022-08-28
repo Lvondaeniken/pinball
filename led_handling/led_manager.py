@@ -11,7 +11,7 @@ TIMEBASE_MS = 20
 class LedManager(Process):
     def startup(self, debug: bool = False):
         self.debug = debug
-        self.deamon = True
+        self.deamon = True 
         self.toManager = Queue()
         self.fromManager = Queue()
         self.start()
