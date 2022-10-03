@@ -29,10 +29,10 @@ class PinballView(App):
         for screen in self.screens:
             self.sm.add_widget(screen)
         Clock.schedule_interval(self.queue_listener, 0.02)
+        self.sm.switch_to(self.screens[0])
         return self.sm
 
     def play(self):
-        self.sm.current = 'play'
         sound = SoundLoader.load('media/can-open-3.wav').play()
         SoundLoader.load('media/pouring.wav').play()
 
