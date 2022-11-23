@@ -18,7 +18,7 @@ Builder.load_file('view/kv_files/start.kv')
 Builder.load_file('view/kv_files/play.kv')
 
 class PinballView(App):
-    def __init__(self, queue: mp.Queue):
+        def __init__(self, queue: mp.Queue):
         super(PinballView, self).__init__()
         self.queue = queue 
 
