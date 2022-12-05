@@ -2,7 +2,8 @@ import multiprocessing as mp
 import queue
 from pinball_hardware.basic_parts.bumper import Bumper
 from pinball_hardware.basic_parts.target import Target
-#from pinball_hardware.basic_parts.steppers import Stepperdriver
+
+# from pinball_hardware.basic_parts.steppers import Stepperdriver
 from pinball_hardware.nucleo import Nucleo
 from led_handling.led_manager import LedManager
 from led_handling.led_event import LedElements
@@ -12,36 +13,25 @@ from events.gui_events import *
 
 
 class PinballMachine:
-    def __init__(self, nucleo: Nucleo, led_manager: LedManager, view, debug: bool=False):
-        self.nucleo = nucleo
+    def __init__(self, led_manager: LedManager, view, debug: bool = False):
         self.led_manager = led_manager
         self.debug = debug
-        self.view_queue = view
-        # init nucleo asap because other members need it.
-        self.nucleo.startup()
+
         self.led_manager.startup(self.debug)
         self.parts = {
             EventElement.BUMPER1: Bumper(LedElements.BUMPER1, self.led_manager),
-            EventElement.BUMPER2: Bumper(LedElements.BUMPER2, self.led_manager), 
+            EventElement.BUMPER2: Bumper(LedElements.BUMPER2, self.led_manager),
             EventElement.BUMPER3: Bumper(LedElements.BUMPER3, self.led_manager),
             EventElement.TARGET1: Target(LedElements.TARGET1, self.led_manager),
             EventElement.TARGET2: Target(LedElements.TARGET2, self.led_manager),
             EventElement.TARGET3: Target(LedElements.TARGET3, self.led_manager),
         }
 
-    def update(self):
-        event = self.nucleo.getEvent() 
+    def update(self, event):
         if event:
-            print(f'received event -> {event}')
-            self.nucleo.sendEvent('ack')
+            print(f"received event -> {event}")
             self.resolve_event(event)
 
-            if event.element == EventElement.BALLSHOOTER:
-                self.view_queue.put(GuiEvent(GuiEventType.PLAY, event))
-            else:
-                self.view_queue.put(GuiEvent(GuiEventType.HARDWARE_LOG, event.element))
-                
-    
     def resolve_event(self, event: PinballEvent):
         if event.element in self.parts.keys():
             self.parts[event.element].resolve_event()

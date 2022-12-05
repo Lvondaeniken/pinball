@@ -1,5 +1,6 @@
 from enum import Enum, auto
 
+
 class MainState(Enum):
     STARTUP = auto()
     QUEST1 = auto()
@@ -14,6 +15,8 @@ class MainState(Enum):
     QUEST10 = auto()
     QUEST11 = auto()
     QUEST12 = auto()
+    FINAL = auto()
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     pass
