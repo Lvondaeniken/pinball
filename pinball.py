@@ -20,9 +20,10 @@ class PinballApp:
     def run(self):
         self.gui_proc.start()
         self.game.start()
+        while True:
+            pass
 
 def setup_view(queue):
-    #disable for now because raspi no display
     p = PinballView(queue)
     p.run()
     while True: 

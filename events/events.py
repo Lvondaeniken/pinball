@@ -9,7 +9,17 @@ class EventElement(Enum):
     TARGET2 = auto()
     TARGET3 = auto()
     BALLSHOOTER = auto()
-    KICKER = auto()
+    KICKER_LEFT = auto()
+    KICKER_RIGHT = auto()
+    LIGHT_BAR1 = auto()
+    LIGHT_BAR2 = auto()
+    LIGHT_BAR3 = auto()
+    LIGHT_BAR4 = auto()
+    LIGHT_BAR5 = auto()
+    LIGHT_BAR6 = auto()
+    LIGHT_BAR7 = auto()
+    LIGHT_BAR8 = auto()
+
 
 class EventType(Enum):
     HIT = auto()

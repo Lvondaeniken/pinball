@@ -2,12 +2,13 @@ import multiprocessing as mp
 import queue
 from pinball_hardware.basic_parts.bumper import Bumper
 from pinball_hardware.basic_parts.target import Target
-from pinball_hardware.basic_parts.steppers import Stepperdriver
+#from pinball_hardware.basic_parts.steppers import Stepperdriver
 from pinball_hardware.nucleo import Nucleo
 from led_handling.led_manager import LedManager
 from led_handling.led_event import LedElements
 import time
 from events.events import EventElement, PinballEvent
+from events.gui_events import *
 
 
 class PinballMachine:
@@ -34,6 +35,12 @@ class PinballMachine:
             print(f'received event -> {event}')
             self.nucleo.sendEvent('ack')
             self.resolve_event(event)
+
+            if event.element == EventElement.BALLSHOOTER:
+                self.view_queue.put(GuiEvent(GuiEventType.PLAY, event))
+            else:
+                self.view_queue.put(GuiEvent(GuiEventType.HARDWARE_LOG, event.element))
+                
     
     def resolve_event(self, event: PinballEvent):
         if event.element in self.parts.keys():

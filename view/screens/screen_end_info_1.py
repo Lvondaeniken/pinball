@@ -2,6 +2,7 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from events.gui_events import GuiEventType, GuiEvent
 
 text1 = (
     "Das Bier ist bereit abgezapft zu werden.\n"
@@ -42,6 +43,16 @@ class EndInfo1Screen(Screen):
         if self.txt_index==len(txt):
             self.txt_index = 0
         self.ids['lb0'].text = txt[self.txt_index]
+
+
+    def handleEvent(self, event: GuiEvent)-> None: 
+        print("received event")
+        self.txt_index+=1
+        if self.txt_index==len(txt):
+            self.txt_index = 0
+        self.ids['lb0'].text = txt[self.txt_index]
+
+
 
 
 
