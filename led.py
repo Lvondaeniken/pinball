@@ -7,13 +7,6 @@ from led_handling.led_manager import LedManager
 # LED strip configuration:
 
 if __name__ == "__main__":
-    l = LedEvent(
-        LedAnimations.SWITCH,
-        LedElements.BUMPER1,
-        LedColor(1, 1, 1),
-        LedColor(0, 0, 0),
-        1,
-    )
     manager = LedManager()
     manager.startup(True)
 
