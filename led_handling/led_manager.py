@@ -4,15 +4,17 @@ from led_handling.led_event import LedElements
 from led_handling.led_event import LedEvent
 from led_handling.led_group import LedGroup
 from led_handling.led_color import LedColor
-#from led_handling.ws2812 import WS2812
+
+# from led_handling.ws2812 import WS2812
 from led_handling.dummy_strip import DummyStrip
 
 TIMEBASE_MS = 20
 
+
 class LedManager(Process):
     def startup(self, debug: bool = False):
         self.debug = debug
-        self.deamon = True 
+        self.deamon = True
         self.toManager = Queue()
         self.fromManager = Queue()
         self.start()
@@ -29,11 +31,11 @@ class LedManager(Process):
             LedElements.TARGET2: LedGroup(3, TIMEBASE_MS),
             LedElements.TARGET3: LedGroup(3, TIMEBASE_MS),
         }
-        #self.leds = WS2812()
+        # self.leds = WS2812()
         self.leds = DummyStrip()
 
         while True:
-            sleep(TIMEBASE_MS/1000)
+            sleep(TIMEBASE_MS / 1000)
             self.check_new_events()
             self.update_leds()
 

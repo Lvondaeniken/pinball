@@ -1,12 +1,10 @@
 from led_handling.led_event import LedEvent
 from led_handling.led_color import LedColor
-from led_handling.led_group import LedGroup
 from led_handling.led_event import LedAnimations, LedElements
 from led_handling.led_manager import LedManager
 
 #
 # LED strip configuration:
-import sys, os
 
 if __name__ == "__main__":
     l = LedEvent(
