@@ -1,7 +1,4 @@
-from led_handling.animations import AnimationInterface
-from led_handling.blinking import BlinkingLight
-from led_handling.led_animations import LedAnimations
-from led_handling.led_event import LedEvent
+from led_handling.animations import AnimationInterface from led_handling.blinking import BlinkingLight from led_handling.led_animations import LedAnimations from led_handling.led_event import LedEvent
 from led_handling.led_color import LedColor
 from led_handling.led_switch import LedSwitch
 

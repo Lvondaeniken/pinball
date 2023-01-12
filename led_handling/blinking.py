@@ -34,11 +34,11 @@ class BlinkingLight(AnimationInterface):
                     self._set_to_color(self.color)
                 else:
                     self._set_to_color(self.background_color)
-            # increment counter
             self.frame_counter += 1
             return self.led_states
         elif self.frame_counter == self.frames_to_survive:
             self._set_to_color(LedColor(0, 0, 0))
+            self.frame_counter += 1
             return self.led_states
         else:
             return None
