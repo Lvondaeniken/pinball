@@ -7,7 +7,7 @@ from events.event_factory import get_event_from_string
 
 class Nucleo(Process):
     def startup(self) -> None:
-        self.daemon = True 
+        self.daemon:bool = True 
         self.toNucleo = Queue()
         self.fromNucleo = Queue()
         self.start()

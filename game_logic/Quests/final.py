@@ -1,4 +1,3 @@
-from events.events import EventElement
 from game_logic.Quests.Questbase import Questbase
 from pinball_hardware.pinball_machine import PinballMachine
 from events.events import PinballEvent, EventElement

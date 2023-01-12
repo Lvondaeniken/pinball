@@ -1,4 +1,4 @@
-
+from typing import Optional
 from events.events import EventElement, EventType, PinballEvent
 
 EVENT_STR_PAIRS = {
@@ -11,10 +11,10 @@ EVENT_STR_PAIRS = {
     "kl": PinballEvent(EventElement.KICKER_LEFT, EventType.ENABLE),
     "kr": PinballEvent(EventElement.KICKER_RIGHT, EventType.ENABLE),
     "bs": PinballEvent(EventElement.BALLSHOOTER, EventType.ENABLE),
-    }
+}
 
-def get_event_from_string(event: str)->PinballEvent:
+
+def get_event_from_string(event: str) -> Optional[PinballEvent]:
     if event in EVENT_STR_PAIRS.keys():
         return EVENT_STR_PAIRS[event]
-    return None 
-    
+    return None

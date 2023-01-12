@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum, auto
 from events.events import PinballEvent
+from typing import Optional
 
 
 class GuiEventType(Enum):
@@ -15,4 +16,4 @@ class GuiEventType(Enum):
 @dataclass
 class GuiEvent:
     event: GuiEventType
-    src: PinballEvent
+    src: Optional[PinballEvent]

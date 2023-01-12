@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from events.events import PinballEvent
 from pinball_hardware.pinball_machine import PinballMachine
 from multiprocessing import Queue
 
@@ -13,5 +14,5 @@ class Questbase(ABC):
         pass
 
     @abstractmethod
-    def update(event) -> None:
+    def update(self, event: PinballEvent) -> None:
         pass

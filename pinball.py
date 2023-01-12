@@ -14,17 +14,15 @@ class PinballApp:
         led_manager = LedManager()
         pinball_hw = PinballMachine(led_manager, view_queue, False)
 
-        self.gui_proc = Process(target=setup_view, args=(view_queue,))
+        self.gui_proc = Process(target=setup_proc, args=(view_queue,))
         self.game = Game(nucleo, pinball_hw, view_queue)
 
     def run(self):
         self.gui_proc.start()
         self.game.start()
-        while True:
-            pass
 
 
-def setup_view(queue):
+def setup_proc(queue):
     p = PinballView(queue)
     p.run()
     while True:
