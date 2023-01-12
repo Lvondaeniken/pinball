@@ -1,5 +1,6 @@
 from enum import Enum, auto
 
+
 class LedElements(Enum):
     BUMPER1 = auto()
     BUMPER2 = auto()

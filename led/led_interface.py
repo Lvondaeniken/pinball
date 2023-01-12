@@ -1,9 +1,10 @@
 from abc import ABC
-from led_handling.led_color import LedColor
+from led.color import LedColor
 
-class LedInterface(ABC): 
+
+class LedInterface(ABC):
     def setPixelColor(self, index: int, color: LedColor):
         ...
 
     def show(self):
-        ... 
+        ...

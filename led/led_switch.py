@@ -1,5 +1,5 @@
-from led_handling.animations import AnimationInterface
-from led_handling.led_color import LedColor
+from led.animations import AnimationInterface
+from led.color import LedColor
 from typing import Optional
 
 

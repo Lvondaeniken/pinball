@@ -1,12 +1,11 @@
 from multiprocessing import Process, Queue
 from time import sleep
-from led_handling.led_event import LedElements
-from led_handling.led_event import LedEvent
-from led_handling.led_group import LedGroup
-from led_handling.led_color import LedColor
+from led.led_event import LedElements, LedEvent
+from led.led_group import LedGroup
+from led.color import LedColor
 
 # from led_handling.ws2812 import WS2812
-from led_handling.dummy_strip import DummyStrip
+from led.dummy_strip import DummyStrip
 
 TIMEBASE_MS = 20
 

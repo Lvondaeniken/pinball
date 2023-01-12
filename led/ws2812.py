@@ -1,5 +1,5 @@
-from led_handling.led_interface import LedInterface
-from led_handling.led_color import LedColor
+from led.led_interface import LedInterface
+from led.color import LedColor
 import rpi_ws281x as ws
 
 
@@ -13,10 +13,17 @@ class WS2812(LedInterface):
         self.led_brightness = 20  # Set to 0 for darkest and 255 for brightest
         # True to invert the signal (when using NPN transistor level shift)
         self.led_invert = False
-        self.led_channel = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+        self.led_channel = 0  # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-        self.strip = ws.PixelStrip(self.led_count, self.led_pin, self.led_freq_hz,
-                                   self.led_dma, self.led_invert, self.led_brightness, self.led_channel)
+        self.strip = ws.PixelStrip(
+            self.led_count,
+            self.led_pin,
+            self.led_freq_hz,
+            self.led_dma,
+            self.led_invert,
+            self.led_brightness,
+            self.led_channel,
+        )
         self.strip.begin()
 
     def setPixelColor(self, index: int, color: LedColor):
@@ -24,4 +31,4 @@ class WS2812(LedInterface):
         self.strip.setPixelColor(index, c)
 
     def show(self):
-        self.strip.show() 
+        self.strip.show()

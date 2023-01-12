@@ -1,6 +1,6 @@
 from typing import Optional
-from led_handling.animations import AnimationInterface
-from led_handling.led_color import LedColor
+from led.animations import AnimationInterface
+from led.color import LedColor
 
 
 class BlinkingLight(AnimationInterface):

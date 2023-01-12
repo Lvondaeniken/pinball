@@ -1,19 +1,15 @@
-import multiprocessing as mp
-import queue
 from pinball_hardware.basic_parts.bumper import Bumper
 from pinball_hardware.basic_parts.target import Target
+import multiprocessing as mp
 
 # from pinball_hardware.basic_parts.steppers import Stepperdriver
-from pinball_hardware.nucleo import Nucleo
-from led_handling.led_manager import LedManager
-from led_handling.led_event import LedElements
-import time
+from led.led_manager import LedManager
+from led.led_event import LedElements
 from events.events import EventElement, PinballEvent
-from events.gui_events import *
 
 
 class PinballMachine:
-    def __init__(self, led_manager: LedManager, view, debug: bool = False):
+    def __init__(self, led_manager: LedManager, view: mp.Queue, debug: bool = False):
         self.led_manager = led_manager
         self.debug = debug
 
