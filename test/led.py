@@ -79,6 +79,6 @@ if __name__ == "__main__":
                     LedElements.BUMPER3,
                     LedColor(0, 255, 0),
                     LedColor(255, 0, 0),
-                    1000,
+                    10,
                 )
             )

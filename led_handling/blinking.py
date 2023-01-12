@@ -6,10 +6,10 @@ from led_handling.led_color import LedColor
 class BlinkingLight(AnimationInterface):
     def __init__(
         self,
-        timebase_ms,
-        duration_s,
-        frequency_hz,
-        led_count,
+        timebase_ms: int,
+        duration_s: int,
+        frequency_hz: int,
+        led_count: int,
         color: LedColor,
         background: LedColor,
     ):
@@ -32,17 +32,18 @@ class BlinkingLight(AnimationInterface):
                 # check if it is an even or odd half period
                 if (self.frame_counter / self.half_period_frames) % 2 == 0:
                     self._set_to_color(self.color)
-                    # print('do this')
                 else:
                     self._set_to_color(self.background_color)
-                    # print('do that')
             # increment counter
             self.frame_counter += 1
+            return self.led_states
+        elif self.frame_counter == self.frames_to_survive:
+            self._set_to_color(LedColor(0, 0, 0))
             return self.led_states
         else:
             return None
 
     def _set_to_color(self, color: LedColor):
         self.led_states: list[LedColor] = []
-        for i in range(self.led_count):
+        for _ in range(self.led_count):
             self.led_states.append(color)
