@@ -1,6 +1,5 @@
 from pinball_hardware.basic_parts.bumper import Bumper
 from pinball_hardware.basic_parts.target import Target
-import multiprocessing as mp
 
 # from pinball_hardware.basic_parts.steppers import Stepperdriver
 from led.led_manager import LedManager
@@ -9,11 +8,9 @@ from events.events import EventElement, PinballEvent
 
 
 class PinballMachine:
-    def __init__(self, led_manager: LedManager, view: mp.Queue, debug: bool = False):
+    def __init__(self, led_manager: LedManager):
         self.led_manager = led_manager
-        self.debug = debug
 
-        self.led_manager.startup(self.debug)
         self.parts = {
             EventElement.BUMPER1: Bumper(LedElements.BUMPER1, self.led_manager),
             EventElement.BUMPER2: Bumper(LedElements.BUMPER2, self.led_manager),

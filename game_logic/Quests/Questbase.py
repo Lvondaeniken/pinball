@@ -6,7 +6,7 @@ from multiprocessing import Queue
 
 class Questbase(ABC):
     @abstractmethod
-    def register(self, machine: PinballMachine, gui: Queue):
+    def register(self, gui: Queue):
         pass
 
     @abstractmethod

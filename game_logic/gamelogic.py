@@ -1,23 +1,24 @@
-from pinball_hardware.pinball_machine import PinballMachine
 from multiprocessing import Queue
 from game_logic.Quests.Questbase import Questbase
 from game_logic.Quests.final import Final
+from game_logic.Quests.final_menu import FinalMenu
 from game_logic.game_quest import MainState
 from pinball_hardware.nucleo import Nucleo
 
-QUESTS: dict[MainState, Questbase] = {MainState.FINAL: Final()}
+QUESTS: dict[MainState, Questbase] = {
+    MainState.FINAL_MENU: FinalMenu(),
+    MainState.FINAL: Final(),
+}
 
 
 class Game:
-    def __init__(
-        self, nucleo: Nucleo, pinball_machine: PinballMachine, gui_queue: Queue
-    ):
-        self.machine = pinball_machine
+    def __init__(self, nucleo: Nucleo, gui: Queue):
         self.nucleo = nucleo
-        self.view_queue = gui_queue
+        self.gui = gui
         self.nucleo.startup()
-        self.active_quest: Questbase = QUESTS[MainState.FINAL]
-        self.active_quest.register(self.machine, self.view_queue)
+        self.state = MainState.FINAL_MENU
+        self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU]
+        self.active_quest.register(self.gui)
 
     def start(self):
         while True:
@@ -26,9 +27,10 @@ class Game:
                 continue
             self.active_quest.update(event)
             if self.active_quest.is_done():
-                print("Final Quest done")
-                raise Exception("RIP DONE")
+                self._get_next_quest()
 
-
-def get_next_quest() -> Questbase:
-    return QUESTS[MainState.STARTUP]
+    def _get_next_quest(self):
+        if self.state is MainState.FINAL_MENU:
+            self.state = MainState.FINAL
+            self.active_quest = QUESTS[MainState.FINAL]
+            self.active_quest.register(self.gui)

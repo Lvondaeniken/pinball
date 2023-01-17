@@ -43,7 +43,7 @@ class Nucleo(Process):
 
     def run(self):
         print("nucleo receiving started")
-        self.ser = Serial(port="/dev/ttyUSB0", baudrate=9600)
+        self.ser = Serial(port="/dev/ttyUSB1", baudrate=9600)
         self.incoming_nucleo_msg_buffer = ""
         self.ser.write("hello".encode())
         while True:

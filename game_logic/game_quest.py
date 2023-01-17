@@ -15,6 +15,7 @@ class MainState(Enum):
     QUEST10 = auto()
     QUEST11 = auto()
     QUEST12 = auto()
+    FINAL_MENU = auto()
     FINAL = auto()
 
 
