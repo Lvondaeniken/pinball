@@ -3,11 +3,18 @@ from time import sleep
 from led.led_event import LedElements, LedEvent
 from led.led_group import LedGroup
 from led.color import LedColor
-
-# from led_handling.ws2812 import WS2812
-from led.dummy_strip import DummyStrip
+from led.strip.strip import get_strip
 
 TIMEBASE_MS = 20
+
+LED_GROUPS = {
+    LedElements.BUMPER1: LedGroup(3, TIMEBASE_MS),
+    LedElements.BUMPER2: LedGroup(3, TIMEBASE_MS),
+    LedElements.BUMPER3: LedGroup(3, TIMEBASE_MS),
+    LedElements.TARGET1: LedGroup(3, TIMEBASE_MS),
+    LedElements.TARGET2: LedGroup(3, TIMEBASE_MS),
+    LedElements.TARGET3: LedGroup(3, TIMEBASE_MS),
+}
 
 
 class LedManager(Process):
@@ -22,16 +29,8 @@ class LedManager(Process):
         self.toManager.put(event)
 
     def run(self):
-        self.led_groups = {
-            LedElements.BUMPER1: LedGroup(3, TIMEBASE_MS),
-            LedElements.BUMPER2: LedGroup(3, TIMEBASE_MS),
-            LedElements.BUMPER3: LedGroup(3, TIMEBASE_MS),
-            LedElements.TARGET1: LedGroup(3, TIMEBASE_MS),
-            LedElements.TARGET2: LedGroup(3, TIMEBASE_MS),
-            LedElements.TARGET3: LedGroup(3, TIMEBASE_MS),
-        }
-        # self.leds = WS2812()
-        self.leds = DummyStrip()
+        self.led_groups = LED_GROUPS
+        self.leds = get_strip()
 
         while True:
             sleep(TIMEBASE_MS / 1000)

@@ -1,7 +1,7 @@
-from led_handling.led_event import LedEvent
-from led_handling.led_color import LedColor
-from led_handling.led_event import LedAnimations, LedElements
-from led_handling.led_manager import LedManager
+from led.led_event import LedEvent
+from led.color import LedColor
+from led.led_event import LedAnimations, LedElements
+from led.led_manager import LedManager
 
 #
 # LED strip configuration:

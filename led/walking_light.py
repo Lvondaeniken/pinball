@@ -31,4 +31,3 @@ class WalkingLight(AnimationInterface):
         if self.on_index > 0:
             self.led_states[self.on_index - 1] = self.background_color
         return self.led_states
-
