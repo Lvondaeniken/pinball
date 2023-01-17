@@ -19,7 +19,7 @@ class BlinkingLight(AnimationInterface):
         self._led_count = led_count
         self._frame_counter = 0
         self._background_color = background
-        self._led_states: list[LedColor] = []
+        self._led_states: list[LedColor]
         self._set_to_color(self._background_color)
 
     def __repr__(self):
@@ -53,6 +53,8 @@ class BlinkingLight(AnimationInterface):
     def _is_last_frame(self):
         return self._frame_counter == self._frames_to_survive
 
-    def _set_to_color(self, color: LedColor):
+    def _set_to_color(self, color: LedColor) -> None:
+        led: list[LedColor] = []
         for _ in range(self._led_count):
-            self._led_states.append(color)
+            led.append(color)
+        self._led_states = led

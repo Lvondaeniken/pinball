@@ -30,7 +30,7 @@ class LedManager(Process):
 
     def run(self):
         self.led_groups = LED_GROUPS
-        self.leds = get_strip()
+        self.leds = get_strip(debug=False)
 
         while True:
             sleep(TIMEBASE_MS / 1000)
