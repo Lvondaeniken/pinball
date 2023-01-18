@@ -1,5 +1,8 @@
 from led.led_interface import LedInterface
-from led.color import LedColor import rpi_ws281x as ws
+from led.color import LedColor
+import rpi_ws281x as ws
+
+
 class WS2812(LedInterface):
     def __init__(self):
         self.led_count = 18  # Number of LED pixels.
