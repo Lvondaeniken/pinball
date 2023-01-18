@@ -6,6 +6,8 @@ class LedElements(Enum):
     BUMPER2 = auto()
     BUMPER3 = auto()
     BALLSHOOTER = auto()
+    PIPES = auto()
+    BOTTLE = auto()
     TARGET1 = auto()
     TARGET2 = auto()
     TARGET3 = auto()

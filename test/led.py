@@ -16,7 +16,7 @@ if __name__ == "__main__":
             manager.send_event(
                 LedEvent(
                     LedAnimations.SWITCH,
-                    LedElements.BUMPER1,
+                    LedElements.BALLSHOOTER,
                     LedColor(255, 1, 1),
                     LedColor(0, 0, 0),
                     1000,
@@ -26,7 +26,7 @@ if __name__ == "__main__":
             manager.send_event(
                 LedEvent(
                     LedAnimations.SWITCH,
-                    LedElements.BUMPER1,
+                    LedElements.BALLSHOOTER,
                     LedColor(0, 0, 0),
                     LedColor(0, 0, 0),
                     1000,
@@ -36,7 +36,7 @@ if __name__ == "__main__":
             manager.send_event(
                 LedEvent(
                     LedAnimations.SWITCH,
-                    LedElements.BUMPER2,
+                    LedElements.PIPES,
                     LedColor(255, 1, 1),
                     LedColor(0, 0, 0),
                     1000,
@@ -46,7 +46,7 @@ if __name__ == "__main__":
             manager.send_event(
                 LedEvent(
                     LedAnimations.SWITCH,
-                    LedElements.BUMPER2,
+                    LedElements.PIPES,
                     LedColor(0, 0, 0),
                     LedColor(0, 0, 0),
                     1000,

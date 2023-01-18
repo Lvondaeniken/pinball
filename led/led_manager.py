@@ -4,16 +4,16 @@ from led.led_event import LedElements, LedEvent
 from led.led_group import LedGroup
 from led.color import LedColor
 from led.strip.strip import get_strip
+import led.conf as cfg
 
-TIMEBASE_MS = 20
 
 LED_GROUPS = {
-    LedElements.BUMPER1: LedGroup(3, TIMEBASE_MS),
-    LedElements.BUMPER2: LedGroup(3, TIMEBASE_MS),
-    LedElements.BUMPER3: LedGroup(3, TIMEBASE_MS),
-    LedElements.TARGET1: LedGroup(3, TIMEBASE_MS),
-    LedElements.TARGET2: LedGroup(3, TIMEBASE_MS),
-    LedElements.TARGET3: LedGroup(3, TIMEBASE_MS),
+    LedElements.BUMPER1: LedGroup(3, cfg.TIMEBASE_MS),
+    LedElements.BUMPER2: LedGroup(3, cfg.TIMEBASE_MS),
+    LedElements.BUMPER3: LedGroup(3, cfg.TIMEBASE_MS),
+    LedElements.TARGET1: LedGroup(3, cfg.TIMEBASE_MS),
+    LedElements.TARGET2: LedGroup(3, cfg.TIMEBASE_MS),
+    LedElements.TARGET3: LedGroup(3, cfg.TIMEBASE_MS),
 }
 
 
@@ -33,7 +33,7 @@ class LedManager(Process):
         self.leds = get_strip(debug=self.debug)
 
         while True:
-            sleep(TIMEBASE_MS / 1000)
+            sleep(cfg.TIMEBASE_MS / 1000)
             self.check_new_events()
             self.update_leds()
 
