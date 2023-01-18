@@ -1,16 +1,15 @@
 from kivy.app import App
-
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.core.audio import Sound, SoundLoader
+from kivy.core.audio import SoundLoader, Sound
 from kivy.clock import Clock
-from events.gui_events import GuiEventType
-from view.screens.screen_end_info_1 import *
-from view.screens.event_displayer import *
+
+from view.screens.screen_end_info_1 import EndInfo1Screen
+from view.screens.event_displayer import EventDisplayer
 from view.screens.collecting import Collecting
 
+from events.gui_events import GuiEventType, GuiEvent
 import multiprocessing as mp
-import time
 
 Builder.load_file("view/screens/kv_files/end_screen_1.kv")
 Builder.load_file("view/screens/kv_files/event_displayer.kv")
@@ -42,10 +41,12 @@ class PinballView(App):
         return self.sm
 
     def play(self):
-        sound = SoundLoader.load("media/can-open-3.wav").play()
-        SoundLoader.load("media/pouring.wav").play()
+        can_sound: Sound = SoundLoader.load("media/can-open-3.wav")
+        can_sound.play()
+        pouring_sound: Sound = SoundLoader.load("media/pouring.wav")
+        pouring_sound.play()
 
-    def queue_listener(self, dt):
+    def queue_listener(self, _):
         if self.queue.empty():
             return
         event: GuiEvent = self.queue.get(False)
@@ -53,7 +54,11 @@ class PinballView(App):
         if event.event == GuiEventType.START_FINAL_MODE:
             self.sm.switch_to(self.screens["collecting"])
         else:
-            self.screens[self.sm.current].handleEvent(event)
+            self.get_current_screen().handle_event(event)
+
+    def get_current_screen(self) -> Screen:
+        current: Screen = self.screens[self.sm.current]
+        return current
 
 
 if __name__ == "__main__":

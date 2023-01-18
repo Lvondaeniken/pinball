@@ -22,6 +22,8 @@ text2 = (
     "+ 5 Sek. Zeit auf Countdown."
 )
 text3 = "OKAY LET'S GO"
+HINT = "Für weiter, Balltaste am unteren Tischrand betätigen"
+
 txt = [text1, text2, text3]
 
 
@@ -29,21 +31,20 @@ class EndInfo1Screen(Screen):
     def __init__(self, *args, **kwargs):
         super(EndInfo1Screen, self).__init__(*args, **kwargs)
         self.txt_index = 0
-        for l in self.ids.items():
-            id, label = l
+        for id, label in self.ids.items():
             if id == "lb0":
                 label.text = txt[self.txt_index]
             if id == "btn0":
                 label.bind(on_press=self.cb)
-                label.text = "Für weiter, Balltaste am unteren Tischrand betätigen"
+                label.text = HINT
 
-    def cb(self, i):
+    def cb(self, _):
         self.txt_index += 1
         if self.txt_index == len(txt):
             self.txt_index = 0
         self.ids["lb0"].text = txt[self.txt_index]
 
-    def handleEvent(self, event: GuiEvent) -> None:
+    def handle_event(self, event: GuiEvent) -> None:
         print("received event")
         if event.event == GuiEventType.SHOW_FINAL_INFO_1:
             self.ids["lb0"].text = txt[0]

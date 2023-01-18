@@ -22,7 +22,7 @@ class Game:
 
     def start(self):
         while True:
-            event = self.nucleo.getEvent()
+            event = self.nucleo.get_event()
             if event is None:
                 continue
             self.active_quest.update(event)

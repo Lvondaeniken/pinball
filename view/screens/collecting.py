@@ -42,7 +42,7 @@ class Collecting(Screen):
             f"Brew as much as you can!\n" f"{round(self.end -time.time())} seconds left"
         )
 
-    def handleEvent(self, event: GuiEvent) -> None:
+    def handle_event(self, event: GuiEvent) -> None:
         print("bottle collected ")
         if event.event == GuiEventType.ADD_BOTTLE:
             self.bottle_count += 1

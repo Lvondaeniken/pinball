@@ -1,54 +1,64 @@
-# from serial.serialwin32 import Serial
 from serial import Serial
-from multiprocessing import Process, Queue
+import multiprocessing as mp
 from events.events import PinballEvent
 from events.event_factory import get_event_from_string
 from typing import Optional
 
+SER_PORT = "/dev/ttyUSB1"
+BAUD = 9600
 
-class Nucleo(Process):
+
+def is_endline(char: str) -> bool:
+    if char == "\r":
+        return True
+    elif char == "\n":
+        return True
+    else:
+        return False
+
+
+class Nucleo(mp.Process):
     def startup(self) -> None:
         self.daemon: bool = True
-        self.toNucleo = Queue()
-        self.fromNucleo = Queue()
+        self.to_nucleo = mp.Queue()
+        self.from_nucleo = mp.Queue()
         self.start()
 
-    def sendEvent(self, event: str) -> None:
-        self.toNucleo.put(event)
+    def send_event(self, event: str) -> None:
+        self.to_nucleo.put(event)
 
-    def getEvent(self) -> Optional[PinballEvent]:
-        if not self.fromNucleo.empty():
-            event_str = self.fromNucleo.get()
+    def get_event(self) -> Optional[PinballEvent]:
+        if not self.from_nucleo.empty():
+            event_str = self.from_nucleo.get()
             return get_event_from_string(event_str)
         else:
             return None
 
-    def transmitPendingMessageToNucleo(self) -> None:
-        if not self.toNucleo.empty():
-            msg = self.toNucleo.get()
+    def transmit_to_nucleo(self) -> None:
+        if not self.to_nucleo.empty():
+            msg = self.to_nucleo.get()
             self.ser.write(msg.encode())
 
-    def receiveIncomingMsgFromNucleo(self) -> bool:
+    def receive_from_nucleo(self) -> bool:
         if self.ser.in_waiting == 0:
             return False
         char = self.ser.read().decode()
-        if char == "\r" or char == "\n":
-            return True
-        else:
-            self.incoming_nucleo_msg_buffer += char
+        if not is_endline(char):
+            self.incoming_msg_buffer += char
             return False
+        else:
+            return True
 
-    def resetIncomingMsgBuffer(self) -> None:
-        self.incoming_nucleo_msg_buffer = ""
+    def reset_buffer(self) -> None:
+        self.incoming_msg_buffer = ""
 
     def run(self):
         print("nucleo receiving started")
-        self.ser = Serial(port="/dev/ttyUSB1", baudrate=9600)
-        self.incoming_nucleo_msg_buffer = ""
-        self.ser.write("hello".encode())
+        self.ser = Serial(port=SER_PORT, baudrate=BAUD)
+        self.incoming_msg_buffer: str = ""
         while True:
-            self.transmitPendingMessageToNucleo()
-            if self.receiveIncomingMsgFromNucleo():
-                self.fromNucleo.put(self.incoming_nucleo_msg_buffer)
-                print(self.incoming_nucleo_msg_buffer)
-                self.resetIncomingMsgBuffer()
+            self.transmit_to_nucleo()
+            if self.receive_from_nucleo():
+                self.from_nucleo.put(self.incoming_msg_buffer)
+                print(self.incoming_msg_buffer)
+                self.reset_buffer()
