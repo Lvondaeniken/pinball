@@ -1,20 +1,9 @@
 from multiprocessing import Process, Queue
 from time import sleep
-from led.led_event import LedElements, LedEvent
-from led.led_group import LedGroup
+from led.led_event import LedEvent
 from led.color import LedColor
 from led.strip.strip import get_strip
 import led.conf as cfg
-
-
-LED_GROUPS = {
-    LedElements.BUMPER1: LedGroup(3, cfg.TIMEBASE_MS),
-    LedElements.BUMPER2: LedGroup(3, cfg.TIMEBASE_MS),
-    LedElements.BUMPER3: LedGroup(3, cfg.TIMEBASE_MS),
-    LedElements.TARGET1: LedGroup(3, cfg.TIMEBASE_MS),
-    LedElements.TARGET2: LedGroup(3, cfg.TIMEBASE_MS),
-    LedElements.TARGET3: LedGroup(3, cfg.TIMEBASE_MS),
-}
 
 
 class LedManager(Process):
@@ -29,7 +18,7 @@ class LedManager(Process):
         self.toManager.put(event)
 
     def run(self):
-        self.led_groups = LED_GROUPS
+        self.led_groups = cfg.LED_GROUPS
         self.leds = get_strip(debug=self.debug)
 
         while True:
