@@ -5,7 +5,7 @@ import rpi_ws281x as ws
 
 class WS2812(LedInterface):
     def __init__(self):
-        self.led_count = 18  # Number of LED pixels.
+        self.led_count = 120  # Number of LED pixels.
         self.led_pin = 18  # GPIO pin connected to the pixels (18 uses PWM!).
         # LED signal frequency in hertz (usually 800khz)
         self.led_freq_hz = 800000
