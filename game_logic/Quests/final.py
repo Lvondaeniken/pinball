@@ -1,4 +1,4 @@
-from game_logic.Quests.Questbase import Questbase
+from game_logic.quests.questbase import Questbase
 from events.events import PinballEvent, EventElement
 from events.gui_events import GuiEvent, GuiEventType
 from multiprocessing import Queue

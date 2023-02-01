@@ -1,7 +1,7 @@
 from multiprocessing import Queue
-from game_logic.Quests.Questbase import Questbase
-from game_logic.Quests.final import Final
-from game_logic.Quests.final_menu import FinalMenu
+from game_logic.quests.questbase import Questbase
+from game_logic.quests.final import Final
+from game_logic.quests.final_menu import FinalMenu
 from game_logic.game_quest import MainState
 from pinball_hardware.nucleo import Nucleo
 

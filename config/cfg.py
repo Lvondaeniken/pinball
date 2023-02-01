@@ -1,0 +1,6 @@
+
+NUCLEO_PORT = "/dev/ttyUSB1"
+NUCLEO_BAUD = "9600"
+
+STEPPER_PORT = "/dev/ttyUSBX"
+STEPPER_BAUD = "115200"

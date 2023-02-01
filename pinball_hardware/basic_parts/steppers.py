@@ -1,4 +1,5 @@
 import serial
+import config.cfg as cfg
 import time
 
 # Achtung zuerst "$X" schicken um Alarm Zustand zu verlassen.
@@ -6,7 +7,7 @@ import time
 
 class Stepperdriver:
     def __init__(self):
-        self.ser = serial.Serial(port="/dev/tty.usbmodem14201", baudrate=115200)
+        self.ser = serial.Serial(port=cfg.STEPPER_PORT, baudrate=cfg.STEPPER_BAUD)
         self.ser.write("\r\n\r\n".encode())
         time.sleep(2)  # Wait for grbl to initializer
         self.ser.flushInput()  # Flush startup text in serial input

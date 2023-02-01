@@ -1,5 +1,5 @@
 from multiprocessing import Queue
-from game_logic.Quests.Questbase import Questbase
+from game_logic.quests.questbase import Questbase
 from events.gui_events import GuiEvent, GuiEventType
 from events.events import EventElement, PinballEvent
 from enum import auto, Enum

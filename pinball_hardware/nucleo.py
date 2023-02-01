@@ -3,9 +3,7 @@ import multiprocessing as mp
 from events.events import PinballEvent
 from events.event_factory import get_event_from_string
 from typing import Optional
-
-SER_PORT = "/dev/ttyUSB1"
-BAUD = 9600
+import config.cfg as cfg
 
 
 def is_endline(char: str) -> bool:
@@ -54,7 +52,7 @@ class Nucleo(mp.Process):
 
     def run(self):
         print("nucleo receiving started")
-        self.ser = Serial(port=SER_PORT, baudrate=BAUD)
+        self.ser = Serial(port=cfg.NUCLEO_PORT, baudrate=cfg.NUCLEO_BAUD)
         self.incoming_msg_buffer: str = ""
         while True:
             self.transmit_to_nucleo()
