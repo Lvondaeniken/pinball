@@ -1,9 +1,6 @@
 from serial import Serial
-import multiprocessing as mp
-from events.events import PinballEvent
-from events.event_factory import get_event_from_string
-from typing import Optional
 import config.cfg as cfg
+import socket
 
 
 def is_endline(char: str) -> bool:
@@ -15,27 +12,17 @@ def is_endline(char: str) -> bool:
         return False
 
 
-class Nucleo(mp.Process):
-    def startup(self) -> None:
-        self.daemon: bool = True
-        self.to_nucleo = mp.Queue()
-        self.from_nucleo = mp.Queue()
-        self.start()
-
-    def send_event(self, event: str) -> None:
-        self.to_nucleo.put(event)
-
-    def get_event(self) -> Optional[PinballEvent]:
-        if not self.from_nucleo.empty():
-            event_str = self.from_nucleo.get()
-            return get_event_from_string(event_str)
-        else:
-            return None
+class Nucleo:
+    def __init__(self) -> None:
+        self.s = socket.socket()
+        self.s.connect((cfg.HOST, cfg.PORT))
 
     def transmit_to_nucleo(self) -> None:
-        if not self.to_nucleo.empty():
-            msg = self.to_nucleo.get()
-            self.ser.write(msg.encode())
+        data = self.con.recv(1024).decode("utf-8")
+        if not data:
+            return
+        else:
+            self.ser.write(data.encode())
 
     def receive_from_nucleo(self) -> bool:
         if self.ser.in_waiting == 0:
@@ -57,6 +44,10 @@ class Nucleo(mp.Process):
         while True:
             self.transmit_to_nucleo()
             if self.receive_from_nucleo():
-                self.from_nucleo.put(self.incoming_msg_buffer)
+                self.s.send(self.incoming_msg_buffer.encode())
                 print(self.incoming_msg_buffer)
                 self.reset_buffer()
+
+
+if __name__ == "__main__":
+    Nucleo().run()

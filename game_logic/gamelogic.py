@@ -3,7 +3,7 @@ from game_logic.quests.questbase import Questbase
 from game_logic.quests.final import Final
 from game_logic.quests.final_menu import FinalMenu
 from game_logic.game_quest import MainState
-from pinball_hardware.nucleo import Nucleo
+from pinball_hardware.hardware_listener import HardwareListener
 
 QUESTS: dict[MainState, Questbase] = {
     MainState.FINAL_MENU: FinalMenu(),
@@ -12,10 +12,9 @@ QUESTS: dict[MainState, Questbase] = {
 
 
 class Game:
-    def __init__(self, nucleo: Nucleo, gui: Queue):
+    def __init__(self, nucleo: HardwareListener, gui: Queue):
         self.nucleo = nucleo
         self.gui = gui
-        self.nucleo.startup()
         self.state = MainState.FINAL_MENU
         self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU]
         self.active_quest.register(self.gui)
