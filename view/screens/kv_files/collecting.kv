@@ -1,25 +1,48 @@
+<Label>:
+    font_name: 'view/media/Digitaldream.ttf'
+    font_size: 36
+<Multiplier>:
+    width: 40
+<Score>:
+    width: 40
+<Balls>:
+    width: 40
+
 <Collecting>:
     beer1: beer_gif1
     beer2: beer_gif2
     GridLayout:
         cols: 1
-        rows: 2 
+        rows: 3 
         Label:
             id: title
             text: "Brew as much as you can!"
-            font_size: 50
+            color: 1, 1, 0, 1
+            height: 150
+            size_hint_y: None
         GridLayout:
-            cols:3
-            rows:1
+            cols: 3
+            rows: 1
+            Label:
+                id: main
+                text: "Main"
             Beer:
                 id: beer_gif1
                 size_hint_y: 0.8
                 allow_stretch: True
-            Label: 
-                id:bottles
-                font_size: 20
             Beer:
                 id: beer_gif2
                 size_hint_y: 0.8
                 allow_stretch: True
+        GridLayout:
+            height: 300
+            size_hint_y: None
+            cols:3
+            rows:1
+            Multiplier:
+                orientation: 'vertical'
+            Score:
+                orientation: 'vertical'
+            Balls:
+                orientation: 'vertical'
 

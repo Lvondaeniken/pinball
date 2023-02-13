@@ -1,13 +1,34 @@
-from kivy.app import App
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import Screen
 from events.gui_events import GuiEventType, GuiEvent
 from kivy.properties import ObjectProperty
 from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 import time
 
 atlas_file = "atlas://view/media/beer/frame"
+
+
+class Multiplier(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(Label(text="MULTIPLIER"))
+        self.add_widget(Label(text="000", font_size=100))
+
+
+class Score(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(Label(text="SCORE"))
+        self.add_widget(Label(text="000000000", font_size=100))
+
+
+class Balls(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(Label(text="BALLS"))
+        self.add_widget(Label(text="0/0", font_size=100))
 
 
 class Beer(Image):
