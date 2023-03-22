@@ -1,4 +1,4 @@
-from game_logic.quests.questbase import Questbase
+from game_logic.quests.Questbase import Questbase
 from events.events import EventType, PinballEvent, EventElement
 from events.gui_events import GuiEvent, GuiEventType
 from led.animations import LedAnimations

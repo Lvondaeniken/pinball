@@ -21,9 +21,10 @@ Builder.load_file("view/screens/kv_files/collecting.kv")
 
 
 class PinballView(App):
-    def __init__(self, queue: mp.Queue):
+    def __init__(self, queue: mp.Queue, to_logic: mp.Queue):
         super(PinballView, self).__init__()
         self.queue = queue
+        self.to_logic = to_logic
 
     def build(self):
         # Create the screen manager

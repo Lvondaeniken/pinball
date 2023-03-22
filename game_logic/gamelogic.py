@@ -1,5 +1,5 @@
 from multiprocessing import Queue
-from game_logic.quests.questbase import Questbase
+from game_logic.quests.Questbase import Questbase
 from game_logic.quests.final import Final
 from game_logic.quests.final_menu import FinalMenu
 from game_logic.game_quest import MainState
@@ -25,7 +25,7 @@ class Game:
         self.gui_to_logic = gui_to_logic
         self.led = led
         self.state = MainState.FINAL_MENU
-        self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU](self.gui, self.led)
+        self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU](self.logic_to_gui, self.led)
 
     def start(self):
         while True:
@@ -33,9 +33,10 @@ class Game:
             if event is not None:
                 self.active_quest.update(event)
 
-            event = self.gui_to_logic.get()
-            if event is not None:
-                self.active_quest.update(event)
+            if not self.gui_to_logic.empty():
+                event = self.gui_to_logic.get()
+                if event is not None:
+                    self.active_quest.update(event)
 
             if self.active_quest.is_done():
                 self._get_next_quest()
@@ -43,4 +44,4 @@ class Game:
     def _get_next_quest(self):
         if self.state is MainState.FINAL_MENU:
             self.state = MainState.FINAL
-            self.active_quest = QUESTS[MainState.FINAL](self.gui, self.led)
+            self.active_quest = QUESTS[MainState.FINAL](self.logic_to_gui, self.led)
