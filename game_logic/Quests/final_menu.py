@@ -2,6 +2,7 @@ from multiprocessing import Queue
 from game_logic.quests.questbase import Questbase
 from events.gui_events import GuiEvent, GuiEventType
 from events.events import EventElement, PinballEvent
+from led.led_manager import LedManager
 from enum import auto, Enum
 
 
@@ -12,8 +13,9 @@ class Steps(Enum):
 
 
 class FinalMenu(Questbase):
-    def register(self, gui: Queue):
+    def __init__(self, gui: Queue, led: LedManager):
         self.gui = gui
+        self.led = led
         self.state = Steps.INTRO_1
         self.gui.put(GuiEvent(GuiEventType.SHOW_FINAL_INFO_1, None))
         self.done = False

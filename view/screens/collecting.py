@@ -53,7 +53,7 @@ class Collecting(Screen):
     def __init__(self, *args, **kwargs):
         super(Collecting, self).__init__(*args, **kwargs)
         self.bottle_count = 0
-        Clock.schedule_interval(self.update, 0.02)
+        self.update_event = Clock.schedule_interval(self.update, 0.02)
         self.end = time.time() + 30
 
     def update(self, dt):
@@ -68,6 +68,11 @@ class Collecting(Screen):
         if event.event == GuiEventType.ADD_BOTTLE:
             self.bottle_count += 1
             self.update_text()
+        elif event.event == GuiEventType.BONUS:
+            self.end += 5
+        elif event.event == GuiEventType.ALL_PARTS_HIT:
+            self.ids["title"]. text = "All parts hit!!!!"
+            Clock.unschedule(self.update_event)
 
     def update_text(self):
         self.ids["bottles"].text = f"{self.bottle_count} collected bottles"
