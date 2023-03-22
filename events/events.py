@@ -20,12 +20,14 @@ class EventElement(Enum):
     LIGHT_BAR6 = auto()
     LIGHT_BAR7 = auto()
     LIGHT_BAR8 = auto()
+    GUI = auto()
 
 
 class EventType(Enum):
     HIT = auto()
     ENABLE = auto()
     DISABLE = auto()
+    TIME_OVER = auto()
 
 
 @dataclass

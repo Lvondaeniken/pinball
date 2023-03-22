@@ -13,9 +13,16 @@ QUESTS: dict[MainState, Questbase] = {
 
 
 class Game:
-    def __init__(self, nucleo: HardwareListener, gui: Queue, led: LedManager):
+    def __init__(
+        self,
+        nucleo: HardwareListener,
+        logic_to_gui: Queue,
+        gui_to_logic: Queue,
+        led: LedManager,
+    ):
         self.nucleo = nucleo
-        self.gui = gui
+        self.logic_to_gui = logic_to_gui
+        self.gui_to_logic = gui_to_logic
         self.led = led
         self.state = MainState.FINAL_MENU
         self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU](self.gui, self.led)
@@ -23,9 +30,13 @@ class Game:
     def start(self):
         while True:
             event = self.nucleo.get_event()
-            if event is None:
-                continue
-            self.active_quest.update(event)
+            if event is not None:
+                self.active_quest.update(event)
+
+            event = self.gui_to_logic.get()
+            if event is not None:
+                self.active_quest.update(event)
+
             if self.active_quest.is_done():
                 self._get_next_quest()
 

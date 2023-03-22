@@ -10,21 +10,22 @@ from multiprocessing import Queue, Process
 class PinballApp:
     def __init__(self):
         # setup view with queue and start in separate process
-        view_queue = Queue()
+        logic_to_gui = Queue()
+        gui_to_logic = Queue()
         self.hw_listener = HardwareListener()
         self.hw_listener.connect()
         led_manager = LedManager()
         led_manager.startup(debug=True)
-        self.gui_proc = Process(target=setup_proc, args=(view_queue,))
-        self.game = Game(self.hw_listener, view_queue, led_manager)
+        self.gui_proc = Process(target=setup_proc, args=(logic_to_gui, gui_to_logic, ))
+        self.game = Game(self.hw_listener, logic_to_gui, gui_to_logic, led_manager)
 
     def run(self):
         self.gui_proc.start()
         self.game.start()
 
 
-def setup_proc(queue):
-    p = PinballView(queue)
+def setup_proc(logic_to_gui, gui_to_logic):
+    p = PinballView(logic_to_gui, gui_to_logic)
     p.run()
     while True:
         pass
