@@ -5,45 +5,8 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
+from view.screens.beer_gif import Beer
 import time
-
-atlas_file = "atlas://view/media/beer/frame"
-
-
-class Multiplier(BoxLayout):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(Label(text="MULTIPLIER"))
-        self.add_widget(Label(text="000", font_size=100))
-
-
-class Score(BoxLayout):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(Label(text="SCORE"))
-        self.add_widget(Label(text="000000000", font_size=100))
-
-
-class Balls(BoxLayout):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(Label(text="BALLS"))
-        self.add_widget(Label(text="0/0", font_size=100))
-
-
-class Beer(Image):
-    time = 0.0
-    rate = 0.1
-    frame = 25
-
-    def update(self, dt):
-        self.time += dt
-        if self.time > self.rate:
-            self.time -= self.rate
-            self.source = atlas_file + str(self.frame)
-            self.frame = self.frame - 1
-            if self.frame == 0:
-                self.frame = 25
 
 
 class Collecting(Screen):

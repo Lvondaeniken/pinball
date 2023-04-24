@@ -1,12 +1,33 @@
 <Label>:
     font_name: 'view/media/Digitaldream.ttf'
     font_size: 36
-<Multiplier>:
+
+<Multiplier@BoxLayout>:
     width: 40
-<Score>:
+    Label: 
+        text: "MULTIPLIER"
+    Label:
+        text: "000"
+        id: multiplier_label
+        font_size: 100
+
+<Score@BoxLayout>:
     width: 40
-<Balls>:
+    Label:
+        text: "SCORE"
+    Label:
+        text: "00000000"
+        id: score_label
+        font_size: 100
+
+<Balls@BoxLayout>:
     width: 40
+    Label: 
+        text: "BALLS"
+    Label: 
+        text: "0/0"
+        id: ball_count_label
+        font_size: 100
 
 <Collecting>:
     beer1: beer_gif1
