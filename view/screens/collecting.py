@@ -6,7 +6,13 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from view.screens.beer_gif import Beer
+from kivy.lang import Builder
 import time
+
+kv_files = ["collecting.kv", "balls_widget.kv", "multiplier_widget.kv", "score_widget.kv"]
+
+for file in kv_files:
+    Builder.load_file(f"view/screens/kv_files/collecting_screen/{file}")
 
 
 class Collecting(Screen):

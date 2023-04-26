@@ -6,6 +6,8 @@ from view.pinball_view import PinballView
 from led.led_manager import LedManager
 from multiprocessing import Queue, Process
 
+import subprocess
+
 
 class PinballApp:
     def __init__(self):
@@ -21,16 +23,16 @@ class PinballApp:
 
     def run(self):
         self.gui_proc.start()
-        self.game.start()
+        self.game.run()
+        self.gui_proc.terminate()
 
 
 def setup_proc(logic_to_gui, gui_to_logic):
     p = PinballView(logic_to_gui, gui_to_logic)
     p.run()
-    while True:
-        pass
 
 
 if __name__ == "__main__":
+    subprocess.Popen("python pinball_hardware/hardware_mock.py", shell=True)
     p = PinballApp()
     p.run()

@@ -13,7 +13,6 @@ import multiprocessing as mp
 
 Builder.load_file("view/screens/kv_files/end_screen_1.kv")
 Builder.load_file("view/screens/kv_files/event_displayer.kv")
-Builder.load_file("view/screens/kv_files/collecting.kv")
 # Builder.load_file('view/kv_files/settings.kv')
 # Builder.load_file('view/kv_files/highscore.kv')
 # Builder.load_file('view/kv_files/start.kv')

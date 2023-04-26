@@ -27,11 +27,15 @@ class Game:
         self.state = MainState.FINAL_MENU
         self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU](self.logic_to_gui, self.led)
 
-    def start(self):
+    def run(self):
         while True:
             event = self.nucleo.get_event()
-            if event is not None:
-                self.active_quest.update(event)
+            if event is None:
+                continue
+            if event == "exit":
+                self.led.terminate()
+                return
+            self.active_quest.update(event)
 
             if not self.gui_to_logic.empty():
                 event = self.gui_to_logic.get()

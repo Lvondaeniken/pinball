@@ -11,6 +11,7 @@ EVENT_STR_PAIRS = {
     "kl": PinballEvent(EventElement.KICKER_LEFT, EventType.ENABLE),
     "kr": PinballEvent(EventElement.KICKER_RIGHT, EventType.ENABLE),
     "bs": PinballEvent(EventElement.BALLSHOOTER, EventType.ENABLE),
+    "exit": "exit",
 }
 
 
