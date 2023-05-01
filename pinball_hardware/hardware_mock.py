@@ -1,10 +1,13 @@
 from kivy.app import App
+from kivy.lang import Builder
 import socket
 import config.cfg as cfg
 import time
 
 # set the time interval between connection attempts (in seconds)
 RETRY_INTERVAL = 5
+
+#Builder.load_file("pinball_hardware/hardware_mock_layout.kv")
 
 
 class TestApp(App):
