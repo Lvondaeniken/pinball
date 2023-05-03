@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.audio import SoundLoader, Sound
 from kivy.clock import Clock
+from kivy.config import Config
 
 from view.screens.screen_end_info_1 import EndInfo1Screen
 from view.screens.event_displayer import EventDisplayer
@@ -27,6 +28,9 @@ class PinballView(App):
 
     def build(self):
         # Create the screen manager
+        # Config.set('graphics', 'fullscreen', 1)  # deactivates the responsive window
+        Config.set('graphics', 'width', 1920)  # sets the width to 1920 px
+        Config.set('graphics', 'height', 1080)  # sets the height to 1080 px
         self.sm = ScreenManager()
         self.screens = {
             "end": EndInfo1Screen(name="end"),
