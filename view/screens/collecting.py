@@ -13,7 +13,7 @@ import time
 import multiprocessing as mp
 from kivy.lang import Builder
 
-<<<<<<< Updated upstream
+
 kv_files = [
     "collecting.kv",
     "balls_widget.kv",

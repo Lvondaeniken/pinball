@@ -19,6 +19,9 @@ for file in kv_files:
 class FinalLayout(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        height = self.ids.img1.texture_size[1]
+        self.ids.img1.y = self.height / 2 + height / 2
+        self.ids.img2.y = self.height / 2 + height / 2
 
 
 class Test(App):
