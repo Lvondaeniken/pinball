@@ -61,7 +61,6 @@ class Final(Questbase):
             if event.type == EventType.TIME_OVER:
                 if self._bottles >= MAX_BOTTLES:
                     self.gui.put(GuiEvent(GuiEventType.FINISHED))
-                    
 
 
 if __name__ == "__main__":

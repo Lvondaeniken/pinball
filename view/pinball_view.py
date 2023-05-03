@@ -31,7 +31,7 @@ class PinballView(App):
         self.screens = {
             "end": EndInfo1Screen(name="end"),
             "info": EventDisplayer(name="info"),
-            "collecting": Collecting(name="collecting"),
+            "collecting": Collecting(self.to_logic, name="collecting"),
         }
 
         for screen in self.screens.values():

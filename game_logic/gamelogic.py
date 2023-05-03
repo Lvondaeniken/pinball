@@ -25,7 +25,9 @@ class Game:
         self.gui_to_logic = gui_to_logic
         self.led = led
         self.state = MainState.FINAL_MENU
-        self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU](self.logic_to_gui, self.led)
+        self.active_quest: Questbase = QUESTS[MainState.FINAL_MENU](
+            self.logic_to_gui, self.led
+        )
 
     def run(self):
         while True:
