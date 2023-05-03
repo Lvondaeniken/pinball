@@ -1,0 +1,33 @@
+<Label>:
+    font_name: 'view/media/Digitaldream.ttf'
+    font_size: 36
+
+<FinalLayout@GridLayout>:
+    cols: 1
+    rows: 3 
+    Label:
+        id: title
+        text: "Brew as much as you can!"
+        color: 1, 1, 0, 1
+        height: 150
+        size_hint_y: None
+    FloatLayout:
+        Image:
+            source: "view/media/Final-Background.png"
+            id: img1
+        Image:
+            source: "view/media/Final-Brewing-Kettle.png"
+            id: img2
+    GridLayout:
+        height: 300
+        size_hint_y: None
+        cols:3
+        rows:1
+        Multiplier:
+            id: multiplier_widget
+            orientation: 'vertical'
+        Score:
+            id: score_widget
+            orientation: 'vertical'
+        Balls:
+            orientation: 'vertical'

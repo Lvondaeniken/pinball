@@ -37,6 +37,7 @@ class PinballView(App):
             "info": EventDisplayer(name="info"),
             "collecting": Collecting(self.to_logic, name="collecting"),
         }
+        self.screens["collecting"].add_queue(self.to_logic)
 
         for screen in self.screens.values():
             self.sm.add_widget(screen)

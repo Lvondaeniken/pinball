@@ -1,3 +1,4 @@
+from events.events import EventElement, PinballEvent, EventType
 from kivy.uix.screenmanager import Screen
 from events.gui_events import GuiEventType, GuiEvent
 from kivy.properties import ObjectProperty
@@ -9,7 +10,10 @@ from view.screens.beer_gif import Beer
 from kivy.lang import Builder
 import multiprocessing as mp
 import time
+import multiprocessing as mp
+from kivy.lang import Builder
 
+<<<<<<< Updated upstream
 kv_files = [
     "collecting.kv",
     "balls_widget.kv",
@@ -19,6 +23,9 @@ kv_files = [
 
 for file in kv_files:
     Builder.load_file(f"view/screens/kv_files/collecting_screen/{file}")
+atlas_file = "atlas://view/media/beer/frame"
+Builder.load_file("view/screens/kv_files/collecting.kv")
+
 
 
 class Collecting(Screen):
