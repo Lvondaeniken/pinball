@@ -12,15 +12,18 @@
         height: 150
         size_hint_y: None
     FloatLayout:
-        height: 630
-        size_hint_y: None
         Image:
             source: "view/media/Final-Background.png"
             id: img1
+            allow_stretch: True
+            keep_ratio: False
         Image:
             source: "view/media/Final-Brewing-Kettle.png"
             id: img2
+            allow_stretch: True
+            keep_ratio: False
     GridLayout:
+        allow_stretch: True
         height: 300
         size_hint_y: None
         cols:3

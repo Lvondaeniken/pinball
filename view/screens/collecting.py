@@ -24,7 +24,6 @@ kv_files = [
 for file in kv_files:
     Builder.load_file(f"view/screens/kv_files/collecting_screen/{file}")
 atlas_file = "atlas://view/media/beer/frame"
-Builder.load_file("view/screens/kv_files/collecting.kv")
 
 
 
