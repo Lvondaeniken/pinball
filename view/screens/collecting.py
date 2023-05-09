@@ -45,7 +45,7 @@ class Collecting(Screen):
         self.beer2.update(dt)
         time_left = round(self.end - time.time())
         if time_left == 0:
-            self.to_logic.put(GuiEvent(event=GuiEventType.TIME_OVER, src=None))
+            self.to_logic.put(PinballEvent(element=EventElement.GUI, type=EventType.TIME_OVER))
             Clock.unschedule(self.update_event)
             self.ids.title.text = "TIME OVER"
         else:
@@ -56,13 +56,15 @@ class Collecting(Screen):
     def handle_event(self, event: GuiEvent) -> None:
         print("bottle collected ")
         if event.event == GuiEventType.ADD_BOTTLE:
-            self.bottle_count += 1
-            self.score += 20
+            self.bottle_count += event.src
             self.update_text()
-        elif event.event == GuiEventType.BONUS:
-            self.end += 5
-        elif event.event == GuiEventType.ALL_PARTS_HIT:
+        elif event.event == GuiEventType.BONUS_TIME:
+            self.end += event.src
+        elif event.event == GuiEventType.ALL_BOTTLES_COLLECTED:
             self.ids["title"].text = "All parts hit!!!!"
+            Clock.unschedule(self.update_event)
+        elif event.event == GuiEventType.TIME_OVER:
+            self.ids["title"].text = "TIME OVER MISSION FAILED"
             Clock.unschedule(self.update_event)
 
     def update_text(self):

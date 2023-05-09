@@ -11,10 +11,10 @@ class GuiEventType(Enum):
     SHOW_FINAL_INFO_3 = auto()
     START_FINAL_MODE = auto()
     ADD_BOTTLE = auto()
-    BONUS = auto()
+    BONUS_TIME = auto()
     ALL_PARTS_HIT = auto()
     TIME_OVER = auto()
-    ALL_BOTTLES_FINISHED = auto()
+    ALL_BOTTLES_COLLECTED = auto()
     SHOW_RESULT = auto()
 
 

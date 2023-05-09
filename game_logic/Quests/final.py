@@ -33,7 +33,7 @@ class Final(Questbase):
         self.state = Steps.COLLECTING
         self.gui.put(GuiEvent(GuiEventType.START_FINAL_MODE, None))
         self._done = False
-        self._toHit = COLLECTING
+        self._to_hit = COLLECTING.copy()
         self._bottles = 0
 
     def is_done(self) -> bool:
@@ -44,24 +44,28 @@ class Final(Questbase):
             self.do_collecting(event)
 
     def do_collecting(self, event: PinballEvent) -> None:
-        if event.element in COLLECTING:
-            self.gui.put(GuiEvent(GuiEventType.ADD_BOTTLE, None))
+        if event.element not in COLLECTING:
+            return
+
+        if event.element in self._to_hit:
+            self._to_hit.remove(event.element)
+
+        if len(self._to_hit) == 0:
+            self._to_hit = COLLECTING.copy()
+            print(self._to_hit)
+            self.gui.put(GuiEvent(GuiEventType.ADD_BOTTLE, 20))
+            self.gui.put(GuiEvent(GuiEventType.BONUS_TIME, 5))
+            self._bottles += 20
+        else:
+            self.gui.put(GuiEvent(GuiEventType.ADD_BOTTLE, 1))
             self._bottles += 1
-
-        if event.element in self._toHit:
-            self.gui.put(GuiEvent(GuiEventType.BONUS, None))
-            self._toHit.remove(event.element)
-            print(self._toHit)
-
-        if len(self._toHit) == 0:
-            self.gui.put(GuiEvent(GuiEventType.ALL_PARTS_HIT, None))
-            self._toHit = COLLECTING
 
         if event.element == EventElement.GUI:
             if event.type == EventType.TIME_OVER:
                 if self._bottles >= MAX_BOTTLES:
-                    self.gui.put(GuiEvent(GuiEventType.FINISHED))
-                print("MISSION NOT DONE START AGAIN")
+                    self.gui.put(GuiEvent(GuiEventType.ALL_BOTTLES_COLLECTED))
+                else:
+                    self.gui.put(GuiEvent(GuiEventType.NOT_ENOUGH_BOTTLES))
 
 
 if __name__ == "__main__":
