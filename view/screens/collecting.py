@@ -26,7 +26,6 @@ for file in kv_files:
 atlas_file = "atlas://view/media/beer/frame"
 
 
-
 class Collecting(Screen):
     beer1 = ObjectProperty(None)
     beer2 = ObjectProperty(None)
@@ -45,7 +44,10 @@ class Collecting(Screen):
         self.beer2.update(dt)
         time_left = round(self.end - time.time())
         if time_left == 0:
-            self.to_logic.put(PinballEvent(element=EventElement.GUI, type=EventType.TIME_OVER))
+            print("GUI -> put timeover event")
+            self.to_logic.put(
+                PinballEvent(element=EventElement.GUI, type=EventType.TIME_OVER)
+            )
             Clock.unschedule(self.update_event)
             self.ids.title.text = "TIME OVER"
         else:
@@ -63,14 +65,14 @@ class Collecting(Screen):
         elif event.event == GuiEventType.ALL_BOTTLES_COLLECTED:
             self.ids["title"].text = "All parts hit!!!!"
             Clock.unschedule(self.update_event)
-        elif event.event == GuiEventType.TIME_OVER:
+        elif event.event == GuiEventType.NOT_ENOUGH_BOTTLES:
             self.ids["title"].text = "TIME OVER MISSION FAILED"
             Clock.unschedule(self.update_event)
 
     def update_text(self):
         self.ids["bottles"].text = f"{self.bottle_count} collected bottles"
         self.set_score()
-        self.set_multiplier
+        self.set_multiplier()
 
     def set_score(self):
         self.ids.score_widget.ids.label.text = str(self.score)

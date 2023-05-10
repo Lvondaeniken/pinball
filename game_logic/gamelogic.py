@@ -32,17 +32,19 @@ class Game:
     def run(self):
         while True:
             event = self.nucleo.get_event()
-            if event is None:
-                continue
-            if event == "exit":
-                self.led.terminate()
-                return
-            self.active_quest.update(event)
+            if event is not None:
+                if event == "exit":
+                    self.led.terminate()
+                    return
+                self.active_quest.update(event)
 
             if not self.gui_to_logic.empty():
+                print("LOGIC -> received GUI event")
                 event = self.gui_to_logic.get()
                 if event is not None:
                     self.active_quest.update(event)
+            else:
+                print("LOGIC -> no event received")
 
             if self.active_quest.is_done():
                 self._get_next_quest()

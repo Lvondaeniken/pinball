@@ -27,7 +27,7 @@ class Steps(Enum):
 
 class HitList:
     def __init__(self) -> None:
-        self._list = COLLECTING.copy()
+        self.reset()
 
     def already_hit(self, element: EventElement) -> bool:
         if element in self._list:
@@ -64,6 +64,7 @@ class Final(Questbase):
             self.do_collecting(event)
 
     def do_collecting(self, event: PinballEvent) -> None:
+        print(f"LOGIC -> event {event} received")
         e = event.element
         if e not in COLLECTING:
             return
@@ -78,13 +79,15 @@ class Final(Questbase):
         else:
             self._add_bottles(1)
 
+        if self._bottles >= MAX_BOTTLES:
+            self.gui.put(GuiEvent(GuiEventType.ALL_BOTTLES_COLLECTED))
+
         if e != EventElement.GUI:
             return
         if event.type != EventType.TIME_OVER:
             return
+        print(f"LOGIC -> received TIMEOVER {self._bottles} collected")
         if self._bottles >= MAX_BOTTLES:
-            self.gui.put(GuiEvent(GuiEventType.ALL_BOTTLES_COLLECTED))
-        else:
             self.gui.put(GuiEvent(GuiEventType.NOT_ENOUGH_BOTTLES))
 
     def _add_bottles(self, count: int):

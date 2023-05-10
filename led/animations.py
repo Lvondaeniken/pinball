@@ -8,6 +8,7 @@ class LedAnimations(Enum):
     SWITCH = auto()
     BLINK = auto()
     WALK = auto()
+    RAINBOW = auto()
 
 
 class AnimationInterface(ABC):

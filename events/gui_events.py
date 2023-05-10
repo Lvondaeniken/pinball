@@ -16,6 +16,7 @@ class GuiEventType(Enum):
     TIME_OVER = auto()
     ALL_BOTTLES_COLLECTED = auto()
     SHOW_RESULT = auto()
+    NOT_ENOUGH_BOTTLES = auto()
 
 
 @dataclass
