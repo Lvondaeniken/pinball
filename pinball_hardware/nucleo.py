@@ -1,6 +1,15 @@
 from serial import Serial
-import config.cfg as cfg
 import socket
+import re
+
+NUCLEO_PORT = "/dev/ttyACM0"
+NUCLEO_BAUD = "9600"
+
+STEPPER_PORT = "/dev/ttyUSBX"
+STEPPER_BAUD = "115200"
+
+PORT = 1234
+HOST = "127.0.0.1"
 
 
 def is_endline(char: str) -> bool:
@@ -15,10 +24,10 @@ def is_endline(char: str) -> bool:
 class Nucleo:
     def __init__(self) -> None:
         self.s = socket.socket()
-        self.s.connect((cfg.HOST, cfg.PORT))
+        self.s.connect((HOST, PORT))
 
     def transmit_to_nucleo(self) -> None:
-        data = self.con.recv(1024).decode("utf-8")
+        data = self.s.recv(1024).decode("utf-8")
         if not data:
             return
         else:
@@ -39,13 +48,14 @@ class Nucleo:
 
     def run(self):
         print("nucleo receiving started")
-        self.ser = Serial(port=cfg.NUCLEO_PORT, baudrate=cfg.NUCLEO_BAUD)
+        self.ser = Serial(NUCLEO_PORT, baudrate=NUCLEO_BAUD)
         self.incoming_msg_buffer: str = ""
         while True:
-            self.transmit_to_nucleo()
+            #self.transmit_to_nucleo()
             if self.receive_from_nucleo():
-                self.s.send(self.incoming_msg_buffer.encode())
-                print(self.incoming_msg_buffer)
+                tx = self.incoming_msg_buffer.replace("\n", "").replace(" ", "")
+                self.s.send(tx.encode())
+                print(tx)
                 self.reset_buffer()
 
 
