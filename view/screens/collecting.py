@@ -10,7 +10,6 @@ from view.screens.beer_gif import Beer
 from kivy.lang import Builder
 import multiprocessing as mp
 import time
-import multiprocessing as mp
 from kivy.lang import Builder
 
 
@@ -23,7 +22,6 @@ kv_files = [
 
 for file in kv_files:
     Builder.load_file(f"view/screens/kv_files/collecting_screen/{file}")
-atlas_file = "atlas://view/media/beer/frame"
 
 
 class Collecting(Screen):

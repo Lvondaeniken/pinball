@@ -1,9 +1,11 @@
 from os import walk
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
+from kivy.properties import ObjectProperty
+from kivy.clock import Clock
+from view.screens.beer_gif import Beer
 
 Builder.load_file("view/screens/kv_files/final/final_layout.kv")
 
@@ -18,11 +20,19 @@ for file in kv_files:
 
 
 class FinalLayout(GridLayout):
+    beer: Beer = ObjectProperty(None)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         height = self.ids.img1.texture_size[1]
         self.ids.img1.y = self.ids.img1.y / 2 + height / 2
         self.ids.img2.y = self.ids.img2.y / 2 + height / 2
+        self.update_event = Clock.schedule_interval(self.update, 0.02)
+        self.ids.beer.y += 150 
+        self.ids.beer.x -= 100
+
+    def update(self, dt):
+        self.ids.beer.update(dt)
 
 
 class Test(App):

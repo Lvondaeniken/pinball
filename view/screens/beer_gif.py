@@ -1,6 +1,6 @@
 from kivy.uix.image import Image
 
-atlas_file = "atlas://view/media/Beer-Complete-Spritesheet@2x/frame"
+atlas_file = "atlas://view/media/Beer-Complete-Spritesheet/frame"
 
 
 class Beer(Image):
