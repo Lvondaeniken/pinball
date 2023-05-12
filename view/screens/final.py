@@ -28,11 +28,10 @@ class FinalLayout(GridLayout):
         self.ids.img1.y = self.ids.img1.y / 2 + height / 2
         self.ids.img2.y = self.ids.img2.y / 2 + height / 2
         self.update_event = Clock.schedule_interval(self.update, 0.02)
-        self.ids.beer.y += 150 
-        self.ids.beer.x -= 100
 
     def update(self, dt):
-        self.ids.beer.update(dt)
+        print("do fill")
+        self.ids.beer.update()
 
 
 class Test(App):
