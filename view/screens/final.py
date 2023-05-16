@@ -1,4 +1,3 @@
-from os import walk
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
@@ -28,6 +27,7 @@ class FinalLayout(GridLayout):
         self.ids.img1.y = self.ids.img1.y / 2 + height / 2
         self.ids.img2.y = self.ids.img2.y / 2 + height / 2
         self.update_event = Clock.schedule_interval(self.update, 0.02)
+        self.active_beers = []
 
     def update(self, dt):
         print("do fill")

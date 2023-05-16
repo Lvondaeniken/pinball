@@ -4,6 +4,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.audio import SoundLoader, Sound
 from kivy.clock import Clock
 from kivy.config import Config
+from view.screens.final import FinalLayout
 
 from view.screens.screen_end_info_1 import EndInfo1Screen
 from view.screens.event_displayer import EventDisplayer
@@ -36,6 +37,7 @@ class PinballView(App):
             "end": EndInfo1Screen(name="end"),
             "info": EventDisplayer(name="info"),
             "collecting": Collecting(self.to_logic, name="collecting"),
+            "final": FinalLayout(self.to_logic, name="final")
         }
 
         for screen in self.screens.values():
