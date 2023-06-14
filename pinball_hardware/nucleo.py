@@ -17,6 +17,8 @@ def is_endline(char: str) -> bool:
         return True
     elif char == "\n":
         return True
+    elif char == "":
+        return True
     else:
         return False
 
@@ -31,14 +33,21 @@ class Nucleo:
         if not data:
             return
         else:
-            self.ser.write(data.encode())
+            self.ser.write(data.encode("utf-8"))
 
     def receive_from_nucleo(self) -> bool:
         if self.ser.in_waiting == 0:
             return False
-        char = self.ser.read().decode()
+        read = self.ser.read()
+        print(f"compare {read} to {bytes([0x00])}")
+        if read == bytes([0x00]):
+            print("skip this")
+            return False
+        print(read)
+        char = read.decode("ascii")
         if not is_endline(char):
             self.incoming_msg_buffer += char
+            print(f"recieved char: {char}")
             return False
         else:
             return True
@@ -54,7 +63,7 @@ class Nucleo:
             #self.transmit_to_nucleo()
             if self.receive_from_nucleo():
                 tx = self.incoming_msg_buffer.replace("\n", "").replace(" ", "")
-                self.s.send(tx.encode())
+                self.s.send(tx.encode("utf-8"))
                 print(tx)
                 self.reset_buffer()
 
