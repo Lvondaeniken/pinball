@@ -82,3 +82,31 @@ if __name__ == "__main__":
                     10,
                 )
             )
+        elif c == "8":
+            manager.send_event(
+                LedEvent(
+                    LedAnimations.BLINK,
+                    LedElements.TARGET1,
+                    LedColor(0, 255, 0),
+                    LedColor(255, 0, 0),
+                    10,
+                )
+            )
+            manager.send_event(
+                LedEvent(
+                    LedAnimations.BLINK,
+                    LedElements.TARGET2,
+                    LedColor(0, 255, 0),
+                    LedColor(255, 0, 0),
+                    10,
+                )
+            )
+            manager.send_event(
+                LedEvent(
+                    LedAnimations.BLINK,
+                    LedElements.TARGET3,
+                    LedColor(0, 255, 0),
+                    LedColor(255, 0, 0),
+                    10,
+                )
+            )
