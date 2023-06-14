@@ -18,4 +18,5 @@ EVENT_STR_PAIRS = {
 def get_event_from_string(event: str) -> Optional[PinballEvent]:
     if event in EVENT_STR_PAIRS.keys():
         return EVENT_STR_PAIRS[event]
+    print(f"conversion failed event str {event} is not supported")
     return None

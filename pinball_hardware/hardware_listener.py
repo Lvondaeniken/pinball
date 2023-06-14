@@ -22,11 +22,14 @@ class HardwareListener:
         self.con.send(cmd.encode())
 
     def get_event(self) -> Optional[PinballEvent]:
-        data = self.con.recv(1024).decode("utf-8")
+        data = self.con.recv(1024).decode()
+        print(f"received event -> {data}")
         event = get_event_from_string(data)
         if event:
+            print("conversion success")
             return event
         else:
+            print("conversion failed")
             return None
 
 

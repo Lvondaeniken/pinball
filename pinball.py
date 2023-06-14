@@ -33,6 +33,6 @@ def setup_proc(logic_to_gui, gui_to_logic):
 
 
 if __name__ == "__main__":
-    subprocess.Popen("python pinball_hardware/hardware_mock.py", shell=True)
+    subprocess.Popen("python pinball_hardware/nucleo.py", shell=True)
     p = PinballApp()
     p.run()
