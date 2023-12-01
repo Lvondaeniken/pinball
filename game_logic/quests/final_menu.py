@@ -24,7 +24,7 @@ class FinalMenu(Questbase):
         return self.done
 
     def update(self, event: PinballEvent) -> None:
-        print(f"{event=}")
+        print(f"current state: {self.state}, incoming event: {event}")
         if self.state == Steps.INTRO_1:
             self.do_intro_1(event)
         elif self.state == Steps.INTRO_2:
@@ -35,6 +35,7 @@ class FinalMenu(Questbase):
     def do_intro_1(self, event: PinballEvent) -> None:
         if event.element == EventElement.BALLSHOOTER:
             self.gui.put(GuiEvent(GuiEventType.SHOW_FINAL_INFO_2, None))
+            self.led.send_event()
             self.state = Steps.INTRO_2
 
     def do_intro_2(self, event: PinballEvent) -> None:

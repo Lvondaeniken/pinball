@@ -3,7 +3,6 @@ from typing import Optional
 from events.event_factory import get_event_from_string
 from events.events import PinballEvent
 import config.cfg as cfg
-import multiprocessing
 
 
 class HardwareListener:

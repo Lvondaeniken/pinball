@@ -38,43 +38,42 @@ class TestCli(cmd.Cmd):
     intro: str = "Welcome to pinball harware mock test app"
 
     def __init__(self):
-        super().__init__(self)
+        cmd.Cmd.__init__(self)
         self.host = AppInterface()
-        self.host.connect()
 
-    def do_b1(self):
+    def do_b1(self, args):
         """Bumper 1 Event"""
         self.host.send("b1")
 
-    def do_b2(self):
+    def do_b2(self, args):
         """Bumper 2 Event"""
         self.host.send("b2")
 
-    def do_b3(self):
+    def do_b3(self, args):
         """Bumper 3 Event"""
         self.host.send("b3")
 
-    def do_kl(self):
+    def do_kl(self, args):
         """Kicker Left Event"""
         self.host.send("kl")
 
-    def do_kr(self):
+    def do_kr(self, args):
         """Kicker Right Event"""
         self.host.send("kr")
 
-    def do_bs(self):
+    def do_bs(self, args):
         """Ballshooter Event"""
         self.host.send("bs")
 
-    def do_t1(self):
+    def do_t1(self, args):
         """Target 1 Event"""
         self.host.send("t1")
 
-    def do_t2(self):
+    def do_t2(self, args):
         """Target 2 Event"""
         self.host.send("t2")
 
-    def do_t3(self):
+    def do_t3(self, args):
         """Target 3 Event"""
         self.host.send("t3")
 

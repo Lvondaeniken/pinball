@@ -36,8 +36,9 @@ class PinballEvent:
     type: EventType
 
     def __repr__(self) -> str:
-        return "Event source: {self.element}"
+        return f"Event(element:{self.element}, type:{self.type})"
 
 
 if __name__ == "__main__":
     event = PinballEvent(EventElement.BUMPER2, EventType.HIT)
+

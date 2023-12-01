@@ -43,8 +43,6 @@ class Game:
                 event = self.gui_to_logic.get()
                 if event is not None:
                     self.active_quest.update(event)
-            else:
-                print("LOGIC -> no event received")
 
             if self.active_quest.is_done():
                 self._get_next_quest()

@@ -71,6 +71,7 @@ class Final(Questbase):
 
         if not self._to_hit.already_hit(e):
             self._to_hit.remove(e)
+            self.led.send_event(LedEvent(LedAnimations.SWITCH, LedElements.))
 
         if self._to_hit.empty():
             self._to_hit.reset()
