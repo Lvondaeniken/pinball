@@ -5,6 +5,7 @@ from led.animations import LedAnimations
 from led.elements import LedElements
 from led.led_event import LedEvent
 from led.led_manager import LedManager
+from led.color import LedColor
 from multiprocessing import Queue
 from enum import Enum, auto
 
@@ -18,6 +19,42 @@ COLLECTING = [
 ]
 
 MAX_BOTTLES = 200
+HIT_COLOR = LedColor(255, 20, 0)
+BG_COLOR = LedColor(255, 20, 0)
+B1_HIT_EVENT = LedEvent(
+    LedAnimations.BLINK,
+    LedElements.BUMPER1,
+    HIT_COLOR,
+    BG_COLOR,
+    1)
+B2_HIT_EVENT = LedEvent(
+    LedAnimations.BLINK,
+    LedElements.BUMPER2,
+    HIT_COLOR,
+    BG_COLOR,
+    1)
+B3_HIT_EVENT = LedEvent(
+    LedAnimations.BLINK,
+    LedElements.BUMPER3,
+    HIT_COLOR,
+    BG_COLOR,
+    1)
+
+BS_TRIG_EVENT = LedEvent(
+    LedAnimations.WALK,
+    LedElements.BALLSHOOTER,
+    HIT_COLOR,
+    BG_COLOR,
+    3
+)
+
+DEFAULT = LedEvent(
+    LedAnimations.BLINK,
+    LedElements.BOTTLE,
+    HIT_COLOR,
+    BG_COLOR,
+    1
+)
 
 
 class Steps(Enum):
@@ -71,7 +108,7 @@ class Final(Questbase):
 
         if not self._to_hit.already_hit(e):
             self._to_hit.remove(e)
-            self.led.send_event(LedEvent(LedAnimations.SWITCH, LedElements.))
+            self._led_show_hit(e)
 
         if self._to_hit.empty():
             self._to_hit.reset()
@@ -94,6 +131,18 @@ class Final(Questbase):
     def _add_bottles(self, count: int):
         self._bottles += count
         self.gui.put(GuiEvent(GuiEventType.ADD_BOTTLE, count))
+
+    def _led_show_hit(self, e: EventElement):
+        if e == EventElement.BUMPER1:
+            self.led.send_event(B1_HIT_EVENT)
+        elif e == EventElement.BUMPER2:
+            self.led.send_event(B2_HIT_EVENT)
+        elif e == EventElement.BUMPER3:
+            self.led.send_event(B3_HIT_EVENT)
+        elif e == EventElement.BALLSHOOTER:
+            self.led.send_event(BS_TRIG_EVENT)
+        else:
+            self.led.send_event(DEFAULT)
 
 
 if __name__ == "__main__":
