@@ -35,7 +35,6 @@ class FinalMenu(Questbase):
     def do_intro_1(self, event: PinballEvent) -> None:
         if event.element == EventElement.BALLSHOOTER:
             self.gui.put(GuiEvent(GuiEventType.SHOW_FINAL_INFO_2, None))
-            self.led.send_event()
             self.state = Steps.INTRO_2
 
     def do_intro_2(self, event: PinballEvent) -> None:
